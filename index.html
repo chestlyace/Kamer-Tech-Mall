@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* Hide Google Translate toolbar and banner */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-te-gadget {
+            display: none !important;
+        }
+        #goog-gt-tt {
+            display: none !important;
+        }
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        #google_translate_element {
+            display: none !important;
+        }
+        /* Ensure body doesn't get pushed down */
+        body.translated-ltr {
+            top: 0 !important;
+        }
+        iframe.skiptranslate {
+            visibility: hidden !important;
+            display: none !important;
+        }
+    </style>
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+     <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for range slider */
+        input[type="range"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #3b82f6;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background .3s ease-in-out;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #2563eb;
+        }
+
+        .dark input[type="range"] {
+            background: #4b5563;
+        }
+
+        /* Quick view transition */
+        .quick-view-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .quick-view-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="images/logo.jpg" alt="Logo" class="h-8">
+                    </a>
+                </div>
+                <div class="flex-grow mx-4 relative max-w-md">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search products..."
+                            class="w-full p-3 border rounded-lg pl-10 pr-4 dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onkeyup="handleSearch()"
+                        >
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div id="searchResults" class="absolute w-full mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        All Products
+                    </a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        About Us
+                    </a>
+                    <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="relative">
+                        <select id="languageSelector" onchange="changeLanguage(this.value)" class="text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                    <div id="google_translate_element" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="md:hidden">
+                <!-- Mobile Header -->
+                <div class="flex justify-between items-center py-3">
+                    <div class="flex items-center">
+                        <a href="index.html">
+                            <img src="images/logo.jpg" alt="Logo" class="h-6">
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Search -->
+                <div class="pb-3">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="mobileSearchInput"
+                            placeholder="Search products..."
+                            class="w-full p-3 border rounded-lg pl-10 pr-4 dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onkeyup="handleSearch()"
+                        >
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div id="mobileSearchResults" class="absolute left-4 right-4 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="hidden pb-3">
+                    <div class="flex flex-col space-y-3">
+                        <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            All Products
+                        </a>
+                        <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            About Us
+                        </a>
+                        <div class="px-3">
+                            <select id="mobileLanguageSelector" onchange="changeLanguage(this.value)" class="w-full text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="google_translate_element" style="display:none;"></div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">Tech Deals of the Week</h1>
+                    <p class="text-lg sm:text-xl mb-6 md:mb-8">Up to 50% off on latest gadgets and accessories</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="shop.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">Shop Now</a>
+                        <a href="#" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">Learn More</a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 mt-8 md:mt-0">
+                    <img src="images/banner-hero.jpeg" alt="Hero Banner" class="rounded-lg shadow-xl w-full max-w-md mx-auto md:max-w-none">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Section -->
+    <section class="py-8 md:py-12 bg-gray-300 dark:bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Shop by Category</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="images/phones2.webp" alt="Phones" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Phones</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">Latest smartphones from top brands</p>
+                    <a href="shop.html?category=Phones" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                        Browse Phones <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="images/laptops.webp" alt="Laptops" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Laptops</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">High-performance laptops for work and play</p>
+                    <a href="shop.html?category=Laptops" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                        Browse Laptops <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 sm:col-span-2 md:col-span-1">
+                    <img src="images/accessories.webp" alt="Accessories" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Accessories</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">Essential accessories for your devices</p>
+                    <a href="shop.html?category=Accessories" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                        Browse Accessories <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="py-8 md:py-12 bg-gray-300 dark:bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Featured Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Product 1 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/iphone13pm.webp" alt="iPhone 13 Pro" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">iPhone 13 Pro</h3>
+                    <div class="flex items-center mb-2">
+                    </div>
+                    <div class="flex justify-between items-center mb-3 md:mb-4">
+                        <div>
+                            <span class="text-gray-500 line-through text-sm">FCFA650000</span>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA550000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/macbook pro m2.webp" alt="MacBook Pro" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">MacBook Pro M2</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA905000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/s22.jpg" alt="Samsung Galaxy S22" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">Samsung Galaxy S22</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-gray-500 line-through text-sm">FCFA560000</span>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA470000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/airpods pro.jpg" alt="AirPods Pro" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">AirPods Pro</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA155000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">          
+                        <img src="images/xps 13.jpg" alt="Dell XPS 13" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">Dell XPS 13</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-gray-500 line-through text-sm">FCFA800000</span>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA608000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/sony.webp" alt="Sony WH-1000XM4" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">Sony WH-1000XM4</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA50000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/ipad.webp" alt="iPad Pro" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">iPad Pro 12.9"</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-gray-500 line-through text-sm">FCFA600000</span>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA450000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                            <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        <img src="images/watch 5.jpg" alt="Samsung Galaxy Watch" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    </div>
+                    <h3 class="font-bold text-base md:text-lg mb-2">Samsung Galaxy Watch 5</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-lg md:text-xl font-bold text-blue-600">FCFA75000</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">View Product</button>
+<script>
+// Toggle favorite status and update button style
+function toggleFavourite(productId, btn) {
+    if (isFavourite(productId)) {
+        removeFromFavourites(productId);
+        btn.classList.remove('text-red-500');
+    } else {
+        addToFavourites(productId);
+        btn.classList.add('text-red-500');
+    }
+    updateFavouritesCounter();
+}
+// On load, update all favorite buttons
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('button[data-product-id]').forEach(btn => {
+        const id = parseInt(btn.getAttribute('data-product-id'));
+        if (isFavourite(id)) btn.classList.add('text-red-500');
+    });
+});
+</script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Section -->
+    <section class="py-12 md:py-16 bg-blue-600 dark:bg-blue-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center text-white">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Get Exclusive Deals & Updates</h2>
+                <p class="mb-6 md:mb-8 text-base md:text-lg">Subscribe to our newsletter and receive 10% off your first purchase!</p>
+                <form class="flex flex-col md:flex-row gap-4 justify-center">
+                    <input type="email" placeholder="Enter your email" class="px-4 md:px-6 py-3 rounded-lg text-gray-900 w-full md:w-96 text-sm md:text-base">
+                    <button class="bg-white text-blue-600 px-6 md:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm md:text-base">
+                        Subscribe Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <h3 class="text-base md:text-lg font-bold mb-3 md:mb-4">About Us</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400 text-sm md:text-base">Our Story</a></li>
+                        <li><a href="#" class="hover:text-blue-400 text-sm md:text-base">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-bold mb-3 md:mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400 text-sm md:text-base">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue-400 text-sm md:text-base">Returns</a></li>
+                        <li><a href="#" class="hover:text-blue-400 text-sm md:text-base">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-bold mb-3 md:mb-4">Connect With Us</h3>
+                    <div class="flex space-x-3 md:space-x-4">
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-6 md:mt-8 pt-6 md:pt-8 text-center">
+                <p class="text-sm md:text-base">&copy; 2025 Developer Ace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="products.js"></script>
+    <script src="search-feature.js"></script>
+    <script>
+      
+
+        // // Language translation function
+        // function changeLanguage(lang) {
+        //     localStorage.setItem('selectedLanguage', lang);
+            
+        //     if (lang === 'en') {
+        //         // Return to original language - clear all Google Translate cookies
+        //         // Clear all possible cookie variations
+        //         const cookiesToClear = ['googtrans', 'googtrans_', 'googtrans_element'];
+        //         const paths = ['/', '', document.location.pathname];
+        //         const domains = ['', document.domain, '.' + document.domain, window.location.hostname];
+                
+        //         cookiesToClear.forEach(cookieName => {
+        //             paths.forEach(path => {
+        //                 domains.forEach(domain => {
+        //                     document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path + '; domain=' + domain;
+        //                 });
+        //                 document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path;
+        //             });
+        //             document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        //         });
+                
+        //         // Force immediate reload without cache
+        //         window.location.href = window.location.href.split('#')[0];
+        //     } else if (lang === 'fr') {
+        //         // Translate to French
+        //         const translateElement = document.querySelector('.goog-te-combo');
+        //         if (translateElement) {
+        //             translateElement.value = 'fr';
+        //             translateElement.dispatchEvent(new Event('change'));
+        //         } else {
+        //             // Set cookie directly and reload
+        //             setCookie('googtrans', '/en/fr', 1);
+        //             window.location.reload();
+        //         }
+        //     }
+        // }
+
+        // // Cookie helper functions
+        // function setCookie(name, value, days) {
+        //     const expires = new Date();
+        //     expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        //     document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        // }
+
+        // function deleteCookie(name, path, domain) {
+        //     if (getCookie(name)) {
+        //         let cookieString = name + '=';
+        //         if (path) {
+        //             cookieString += ';path=' + path;
+        //         } else {
+        //             cookieString += ';path=/';
+        //         }
+        //         if (domain) {
+        //             cookieString += ';domain=' + domain;
+        //         }
+        //         cookieString += ';expires=Thu, 01 Jan 1970 00:00:01 GMT';
+        //         document.cookie = cookieString;
+        //     }
+        // }
+
+        // function getCookie(name) {
+        //     const nameEQ = name + "=";
+        //     const ca = document.cookie.split(';');
+        //     for(let i = 0; i < ca.length; i++) {
+        //         let c = ca[i];
+        //         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        //         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        //     }
+        //     return null;
+        // }
+
+        // // Restore language selection on page load
+        // window.addEventListener('load', function() {
+        //     const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+        //     const selector = document.getElementById('languageSelector');
+            
+        //     // If user selected English, aggressively clear all cookies
+        //     if (savedLang === 'en') {
+        //         const cookiesToClear = ['googtrans', 'googtrans_', 'googtrans_element'];
+        //         cookiesToClear.forEach(cookieName => {
+        //             document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        //             document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        //         });
+        //         if (selector) selector.value = 'en';
+                
+        //         // If page is still translated, force another reload
+        //         if (document.body.classList.contains('translated-ltr') || 
+        //             document.body.classList.contains('translated-rtl')) {
+        //             window.location.href = window.location.href.split('#')[0];
+        //         }
+        //     } else if (savedLang === 'fr') {
+        //         // Check current translation state
+        //         const googtrans = getCookie('googtrans');
+        //         if (selector) selector.value = 'fr';
+                
+        //         // If not already translated, trigger translation
+        //         if (!googtrans || !googtrans.includes('/fr')) {
+        //             setTimeout(() => {
+        //                 const translateElement = document.querySelector('.goog-te-combo');
+        //                 if (translateElement) {
+        //                     translateElement.value = 'fr';
+        //                     translateElement.dispatchEvent(new Event('change'));
+        //                 }
+        //             }, 500);
+        //         }
+        //     }
+        // });
+    </script>
+
+</body>
+</html>

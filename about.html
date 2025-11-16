@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TechStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* Hide Google Translate toolbar and banner */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-te-gadget {
+            display: none !important;
+        }
+        #goog-gt-tt {
+            display: none !important;
+        }
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+        #google_translate_element {
+            display: none !important;
+        }
+        /* Ensure body doesn't get pushed down */
+        body.translated-ltr {
+            top: 0 !important;
+        }
+        iframe.skiptranslate {
+            visibility: hidden !important;
+            display: none !important;
+        }
+    </style>
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="images/logo.jpg" alt="Logo" class="h-8">
+                    </a>
+                </div>
+                <div class="flex-grow mx-4 relative max-w-md">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search products..."
+                            class="w-full p-3 border rounded-lg pl-10 pr-4 dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onkeyup="handleSearch()"
+                        >
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div id="searchResults" class="absolute w-full mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        All Products
+                    </a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        About Us
+                    </a>
+                    <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="relative">
+                        <select id="languageSelector" onchange="changeLanguage(this.value)" class="text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                    <div class="relative">
+                        <a href="cart.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCounter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <a href="favorites.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-heart"></i>
+                            <span id="favouritesCounter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    <div id="google_translate_element" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="md:hidden">
+                <!-- Mobile Header -->
+                <div class="flex justify-between items-center py-3">
+                    <div class="flex items-center">
+                        <a href="index.html">
+                            <img src="images/logo.jpg" alt="Logo" class="h-6">
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="relative">
+                            <a href="cart.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span id="mobileCartCounter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                            </a>
+                        </div>
+                        <div class="relative">
+                            <a href="favorites.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                                <i class="fas fa-heart"></i>
+                                <span id="mobileFavouritesCounter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Search -->
+                <div class="pb-3">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="mobileSearchInput"
+                            placeholder="Search products..."
+                            class="w-full p-3 border rounded-lg pl-10 pr-4 dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            onkeyup="handleSearch()"
+                        >
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div id="mobileSearchResults" class="absolute left-4 right-4 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="hidden pb-3">
+                    <div class="flex flex-col space-y-3">
+                        <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            All Products
+                        </a>
+                        <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            About Us
+                        </a>
+                        <div class="px-3">
+                            <select id="mobileLanguageSelector" onchange="changeLanguage(this.value)" class="w-full text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="google_translate_element" style="display:none;"></div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white dark:bg-dark-card shadow-sm">
+        <div class="container mx-auto py-2 px-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                            <span class="text-blue-600 dark:text-blue-400">About Us</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">About TechStore</h1>
+            <p class="text-xl mb-6 max-w-3xl mx-auto">Your trusted destination for cutting-edge technology and exceptional service</p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="py-16 bg-white dark:bg-dark-card">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="images/banner-hero.jpeg" alt="Our Story" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Founded with a passion for technology and innovation, TechStore has been serving customers worldwide since its inception. We believe that everyone deserves access to the latest and greatest tech products at competitive prices.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Our journey began with a simple mission: to make technology accessible, affordable, and easy to understand. Today, we're proud to be one of the leading online tech retailers, offering everything from smartphones and laptops to accessories and smart home devices.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We're committed to providing exceptional customer service, competitive pricing, and a seamless shopping experience. Our team of tech enthusiasts is always here to help you find the perfect product for your needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="py-16 bg-gray-100 dark:bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Core Values</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-dark-card p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Quality Assurance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We only offer products from trusted brands and verify the authenticity of every item we sell.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Customer First</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Your satisfaction is our priority. We're here to support you every step of the way.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Innovation</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We stay ahead of the curve, bringing you the latest tech innovations as they emerge.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-white dark:bg-dark-card">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="images/ACE.jpg" alt="Chestly Ace" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Chestly Ace</h3>
+                    <p class="text-blue-600 dark:text-blue-400 mb-2">Founder & CEO</p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Tech enthusiast with a vision to revolutionize online tech retail.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="images/PRESHU.jpg" alt="Neba Precious" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Neba Precious</h3>
+                    <p class="text-blue-600 dark:text-blue-400 mb-2">Head of Customer Success</p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Dedicated to ensuring every customer has an exceptional experience.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="images/DES.jpg" alt="Ansah Desmond" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Ansah Desmond</h3>
+                    <p class="text-blue-600 dark:text-blue-400 mb-2">Chief Technology Officer</p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Building the infrastructure that powers our seamless shopping experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-5xl font-bold mb-2">10K+</div>
+                    <div class="text-xl opacity-90">Happy Customers</div>
+                </div>
+                <div>
+                    <div class="text-5xl font-bold mb-2">5K+</div>
+                    <div class="text-xl opacity-90">Products</div>
+                </div>
+                <div>
+                    <div class="text-5xl font-bold mb-2">50+</div>
+                    <div class="text-xl opacity-90">Brands</div>
+                </div>
+                <div>
+                    <div class="text-5xl font-bold mb-2">24/7</div>
+                    <div class="text-xl opacity-90">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-gray-100 dark:bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">Get In Touch</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-8 text-lg">
+                    Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-lg">
+                        <div class="text-blue-600 text-3xl mb-3">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Email Us</h3>
+                        <p class="text-gray-600 dark:text-gray-300">support@techstore.com</p>
+                    </div>
+                    <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-lg">
+                        <div class="text-blue-600 text-3xl mb-3">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Call Us</h3>
+                        <p class="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                    </div>
+                    <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-lg">
+                        <div class="text-blue-600 text-3xl mb-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Visit Us</h3>
+                        <p class="text-gray-600 dark:text-gray-300">123 Tech Street, Digital City</p>
+                    </div>
+                </div>
+                <a href="shop.html" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Start Shopping
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">About Us</h3>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="hover:text-blue-400">Our Story</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Shipping Info</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Returns</a></li>
+                        <li><a href="#" class="hover:text-blue-400">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Payment Methods</h3>
+                    <div class="flex space-x-4">
+                        <i class="fab fa-cc-visa fa-2x"></i>
+                        <i class="fab fa-cc-mastercard fa-2x"></i>
+                        <i class="fab fa-cc-paypal fa-2x"></i>
+                        <i class="fab fa-cc-apple-pay fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 Developer Ace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="search-feature.js"></script>
+    <script>
+        // Function to update the cart counter
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCounter = document.getElementById('cartCounter');
+            const count = cart.reduce((total, product) => total + (product.quantity || 1), 0);
+            cartCounter.textContent = count;
+            if (count > 0) {
+                cartCounter.classList.remove('bg-gray-300', 'text-gray-400');
+                cartCounter.classList.add('bg-red-500', 'text-white');
+            } else {
+                cartCounter.classList.remove('bg-red-500', 'text-white');
+                cartCounter.classList.add('bg-gray-300', 'text-gray-400');
+            }
+        }
+
+        // Update favourites counter
+        function updateFavouritesCounter() {
+            const favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+            const favouritesCounter = document.getElementById('favouritesCounter');
+            favouritesCounter.textContent = favourites.length;
+        }
+
+        // Call counters on page load
+        updateCartCounter();
+        updateFavouritesCounter();
+
+        // Language translation function
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLanguage', lang);
+            
+            if (lang === 'en') {
+                // Return to original language - clear all Google Translate cookies
+                // Clear all possible cookie variations
+                const cookiesToClear = ['googtrans', 'googtrans_', 'googtrans_element'];
+                const paths = ['/', '', document.location.pathname];
+                const domains = ['', document.domain, '.' + document.domain, window.location.hostname];
+                
+                cookiesToClear.forEach(cookieName => {
+                    paths.forEach(path => {
+                        domains.forEach(domain => {
+                            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path + '; domain=' + domain;
+                        });
+                        document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + path;
+                    });
+                    document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+                });
+                
+                // Force immediate reload without cache
+                window.location.href = window.location.href.split('#')[0];
+            } else if (lang === 'fr') {
+                // Translate to French
+                const translateElement = document.querySelector('.goog-te-combo');
+                if (translateElement) {
+                    translateElement.value = 'fr';
+                    translateElement.dispatchEvent(new Event('change'));
+                } else {
+                    // Set cookie directly and reload
+                    setCookie('googtrans', '/en/fr', 1);
+                    window.location.reload();
+                }
+            }
+        }
+
+        // Cookie helper functions
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        }
+
+        function deleteCookie(name, path, domain) {
+            if (getCookie(name)) {
+                let cookieString = name + '=';
+                if (path) {
+                    cookieString += ';path=' + path;
+                } else {
+                    cookieString += ';path=/';
+                }
+                if (domain) {
+                    cookieString += ';domain=' + domain;
+                }
+                cookieString += ';expires=Thu, 01 Jan 1970 00:00:01 GMT';
+                document.cookie = cookieString;
+            }
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Restore language selection on page load
+        window.addEventListener('load', function() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+            const selector = document.getElementById('languageSelector');
+            
+            // If user selected English, aggressively clear all cookies
+            if (savedLang === 'en') {
+                const cookiesToClear = ['googtrans', 'googtrans_', 'googtrans_element'];
+                cookiesToClear.forEach(cookieName => {
+                    document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+                });
+                if (selector) selector.value = 'en';
+                
+                // If page is still translated, force another reload
+                if (document.body.classList.contains('translated-ltr') || 
+                    document.body.classList.contains('translated-rtl')) {
+                    window.location.href = window.location.href.split('#')[0];
+                }
+            } else if (savedLang === 'fr') {
+                // Check current translation state
+                const googtrans = getCookie('googtrans');
+                if (selector) selector.value = 'fr';
+                
+                // If not already translated, trigger translation
+                if (!googtrans || !googtrans.includes('/fr')) {
+                    setTimeout(() => {
+                        const translateElement = document.querySelector('.goog-te-combo');
+                        if (translateElement) {
+                            translateElement.value = 'fr';
+                            translateElement.dispatchEvent(new Event('change'));
+                        }
+                    }, 500);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
+

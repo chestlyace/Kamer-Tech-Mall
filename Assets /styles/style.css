@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 768px) {
+    /* Increase touch target sizes */
+    button, .btn-touch {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Improve tap targets for links */
+    a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Better spacing for touch interactions */
+    .touch-spacing {
+        margin: 0.5rem 0;
+    }
+}
+
+/* Add button click styling */
+button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-in-out;
+}
+
+/* Add button click styling for dark mode */
+.dark button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-in-out;
+}
+
+/* Smooth scrolling for better mobile experience */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll on mobile */
+body {
+    overflow-x: hidden;
+}
+
+/* Better focus states for accessibility */
+button:focus, input:focus, select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
