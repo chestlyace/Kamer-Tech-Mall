@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard | Kamer Tech Mall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
+    <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="images/logo.jpg" alt="Logo" class="h-10 rounded-lg shadow">
+                    <div>
+                        <p class="text-xs uppercase tracking-wider text-gray-500">Kamer Tech Mall</p>
+                        <p class="text-lg font-bold">Seller Workspace</p>
+                    </div>
+                </a>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to storefront
+                </a>
+                <a href="shop.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition">
+                    <i class="fas fa-store"></i>
+                    View shop
+                </a>
+                <button onclick="toggleDarkMode()" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-10 md:py-14">
+        <section class="container mx-auto px-4 space-y-8">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-xl p-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <p class="text-sm uppercase tracking-widest text-blue-100">Seller Dashboard</p>
+                    <h1 class="text-3xl md:text-4xl font-bold mt-2">Control every product you publish</h1>
+                    <p class="text-blue-100 mt-2 max-w-2xl">Add new listings, update inventory, and keep your catalog consistent across devices. All changes save to your browser instantly.</p>
+                </div>
+                <div class="flex flex-col gap-2 text-right">
+                    <span class="text-xs uppercase tracking-widest text-blue-100">Need help?</span>
+                    <a href="mailto:support@kamertechmall.com" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/20 transition">
+                        <i class="fas fa-headset"></i>
+                        Contact support
+                    </a>
+                </div>
+            </div>
+
+            <section id="seller-dashboard" class="space-y-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Total products</p>
+                        <p id="dashboardTotalProducts" class="text-3xl font-bold text-gray-900 dark:text-white">0</p>
+                        <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 inline-flex items-center gap-1">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            Live count
+                        </span>
+                    </article>
+                    <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Published listings</p>
+                        <p id="dashboardPublishedProducts" class="text-3xl font-bold text-gray-900 dark:text-white">0</p>
+                        <span class="text-xs text-gray-400">Visible to shoppers</span>
+                    </article>
+                    <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Drafts</p>
+                        <p id="dashboardDraftProducts" class="text-3xl font-bold text-gray-900 dark:text-white">0</p>
+                        <span class="text-xs text-gray-400">Waiting for review</span>
+                    </article>
+                    <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Potential revenue</p>
+                        <p id="dashboardPotentialRevenue" class="text-3xl font-bold text-gray-900 dark:text-white">FCFA0</p>
+                        <span class="text-xs text-gray-400">Based on current stock</span>
+                    </article>
+                </div>
+
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div>
+                        <p class="uppercase tracking-wide text-sm font-semibold text-blue-600 mb-1">Seller Workspace</p>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-2">Manage your catalog in real time</h2>
+                        <p class="text-gray-600 dark:text-gray-300 max-w-3xl">Track inventory, publish new listings, and keep product information accurate. All updates stay on your device until you connect it to your store backend.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button id="resetDashboardBtn" class="inline-flex items-center gap-2 border border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 px-4 py-2 rounded-lg text-sm font-semibold transition">
+                            <i class="fas fa-rotate-left"></i>
+                            Reset demo data
+                        </button>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-lg">
+                            <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                            Autosaves in browser
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-6">
+                        <div class="mb-6">
+                            <p class="text-sm uppercase text-blue-600 font-semibold tracking-wide mb-1">Quick action</p>
+                            <h3 id="sellerFormTitle" class="text-xl font-bold">Add a new product</h3>
+                            <p id="sellerFormSubtitle" class="text-sm text-gray-500 dark:text-gray-400">Provide product information and hit publish to make it live.</p>
+                        </div>
+                        <form id="sellerProductForm" class="space-y-5">
+                            <div>
+                                <label for="productName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product name</label>
+                                <input type="text" id="productName" name="productName" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Logitech MX Master 3S" required>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="productCategory" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Category</label>
+                                    <select id="productCategory" name="productCategory" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                        <option value="Phones">Phones</option>
+                                        <option value="Laptops">Laptops</option>
+                                        <option value="Accessories">Accessories</option>
+                                        <option value="Wearables">Wearables</option>
+                                        <option value="Gaming">Gaming</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="productStatus" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Listing status</label>
+                                    <select id="productStatus" name="productStatus" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="published">Published</option>
+                                        <option value="draft">Draft</option>
+                                        <option value="archived">Archived</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="productOldPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Old price (FCFA)</label>
+                                    <input type="number" min="0" step="1" id="productOldPrice" name="productOldPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="300000">
+                                </div>
+                                <div>
+                                    <label for="productNewPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">New price (FCFA)</label>
+                                    <input type="number" min="0" step="1" id="productNewPrice" name="productNewPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="250000">
+                                </div>
+                                <div>
+                                    <label for="productCurrentPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Current price (FCFA)</label>
+                                    <input type="number" min="0" step="1" id="productCurrentPrice" name="productCurrentPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="240000" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="productQuantity" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Quantity</label>
+                                    <input type="number" min="0" step="1" id="productQuantity" name="productQuantity" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="25" required>
+                                </div>
+                                <div>
+                                    <label for="productSize" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Size</label>
+                                    <input type="text" id="productSize" name="productSize" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. 13-inch">
+                                </div>
+                                <div>
+                                    <label for="productColor" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Color</label>
+                                    <input type="text" id="productColor" name="productColor" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Space Gray">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="productLocation" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Location of shop</label>
+                                    <input type="text" id="productLocation" name="productLocation" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Douala, Cameroon">
+                                </div>
+                                <div>
+                                    <label for="productShopName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Name of shop or seller</label>
+                                    <input type="text" id="productShopName" name="productShopName" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Kamer Tech Hub">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="supplierPhone" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier phone number</label>
+                                    <input type="tel" id="supplierPhone" name="supplierPhone" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="+237 6XX XXX XXX">
+                                </div>
+                                <div>
+                                    <label for="supplierWhatsapp" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier WhatsApp</label>
+                                    <input type="tel" id="supplierWhatsapp" name="supplierWhatsapp" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="+237 6XX XXX XXX">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="productFeaturedPhoto" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Featured photo URL</label>
+                                    <input type="url" id="productFeaturedPhoto" name="productFeaturedPhoto" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://example.com/featured.jpg">
+                                </div>
+                                <div>
+                                    <label for="productOtherPhotos" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Other photos (comma or line separated)</label>
+                                    <textarea id="productOtherPhotos" name="productOtherPhotos" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://example.com/photo-1.jpg, https://example.com/photo-2.jpg"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="productDescription" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product description</label>
+                                <textarea id="productDescription" name="productDescription" rows="3" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Highlight key selling points"></textarea>
+                            </div>
+                            <div>
+                                <label for="productFeatures" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Features</label>
+                                <textarea id="productFeatures" name="productFeatures" rows="3" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Separate features with commas or line breaks"></textarea>
+                            </div>
+                            <div>
+                                <label for="productConditions" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Conditions</label>
+                                <textarea id="productConditions" name="productConditions" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Brand new, sealed box"></textarea>
+                            </div>
+                            <div>
+                                <label for="productReturnPolicy" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Return policy</label>
+                                <textarea id="productReturnPolicy" name="productReturnPolicy" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. 7-day return if unopened"></textarea>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <label class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                    <input type="checkbox" id="productIsFeatured" name="productIsFeatured" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    Featured product
+                                </label>
+                                <label class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
+                                    <input type="checkbox" id="productIsActive" name="productIsActive" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
+                                    Active listing
+                                </label>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button type="submit" id="sellerFormSubmitBtn" class="w-full sm:flex-1 inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-2.5 transition">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    Publish product
+                                </button>
+                                <button type="button" id="cancelEditBtn" class="hidden w-full sm:w-auto inline-flex justify-center items-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-xl px-4 py-2.5 transition">
+                                    <i class="fas fa-xmark"></i>
+                                    Cancel edit
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 italic">Tip: keep descriptions concise. You can always update products later.</p>
+                        </form>
+                    </div>
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-5">
+                            <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+                                <div class="flex flex-col w-full md:w-auto gap-4 md:flex-row md:items-center">
+                                    <div class="flex items-center gap-2 w-full md:w-72 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
+                                        <i class="fas fa-search text-gray-400"></i>
+                                        <input type="text" id="sellerSearchInput" class="flex-1 bg-transparent focus:outline-none text-sm" placeholder="Search by product or category">
+                                    </div>
+                                    <div class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
+                                        <i class="fas fa-filter text-gray-400"></i>
+                                        <select id="sellerStatusFilter" class="bg-transparent focus:outline-none text-sm">
+                                            <option value="all">All statuses</option>
+                                            <option value="published">Published</option>
+                                            <option value="draft">Draft</option>
+                                            <option value="archived">Archived</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button id="clearSellerFilters" class="text-sm text-gray-500 hover:text-blue-600 font-semibold flex items-center gap-2">
+                                    <i class="fas fa-eraser"></i>
+                                    Reset filters
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="sellerEmptyState" class="hidden border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-8 text-center bg-white dark:bg-dark-card">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                                    <i class="fas fa-box-open text-2xl"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold">No products match your filters</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm max-w-md">Try adjusting the search keywords or status filter, or add a new product using the form.</p>
+                                <button id="emptyStateReset" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
+                                    Clear filters
+                                    <i class="fas fa-arrow-rotate-left"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm">
+                            <div class="hidden md:block overflow-x-auto">
+                                <table class="min-w-full text-left text-sm">
+                                    <thead class="text-gray-500 uppercase text-xs tracking-wide">
+                                        <tr>
+                                            <th class="px-6 py-4">Product</th>
+                                            <th class="px-6 py-4">Category</th>
+                                            <th class="px-6 py-4">Price</th>
+                                            <th class="px-6 py-4">Stock</th>
+                                            <th class="px-6 py-4">Status</th>
+                                            <th class="px-6 py-4">Updated</th>
+                                            <th class="px-6 py-4">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboardTableBody" class="divide-y divide-gray-100 dark:divide-gray-800">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="md:hidden p-4 space-y-4" id="dashboardCardList"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Dashboard Toast -->
+    <div id="dashboardToast" class="fixed bottom-6 right-6 z-50 hidden bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold tracking-wide transition transform translate-y-6 opacity-0 pointer-events-none">
+        Updated successfully
+    </div>
+
+    <!-- Product View Modal -->
+    <div id="productViewModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-modal-close></div>
+        <div class="relative w-full max-w-2xl bg-white dark:bg-dark-card rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 p-6 overflow-y-auto max-h-[90vh]">
+            <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-white" data-modal-close>
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <div class="space-y-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/2 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                        <img id="modalProductImage" src="" alt="" class="w-full h-64 object-cover">
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <span id="modalProductStatus" class="inline-flex items-center gap-2 text-xs font-semibold uppercase px-3 py-1 rounded-full bg-gray-100 text-gray-600"></span>
+                        <h3 id="modalProductName" class="text-2xl font-bold"></h3>
+                        <p id="modalProductPrice" class="text-xl font-semibold text-blue-600"></p>
+                        <p id="modalProductUpdated" class="text-xs text-gray-500"></p>
+                        <p id="modalProductDescription" class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Category</p>
+                        <p id="modalProductCategory" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Stock available</p>
+                        <p id="modalProductStock" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Shop / Seller</p>
+                        <p id="modalProductShopName" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Location</p>
+                        <p id="modalProductLocation" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Supplier phone</p>
+                        <p id="modalProductSupplierPhone" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4">
+                        <p class="text-xs uppercase text-gray-400">Supplier WhatsApp</p>
+                        <p id="modalProductSupplierWhatsapp" class="font-semibold text-gray-900 dark:text-white"></p>
+                    </div>
+                </div>
+                <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4 space-y-2">
+                    <p class="text-xs uppercase text-gray-400">Key features</p>
+                    <p id="modalProductFeatures" class="text-sm text-gray-600 dark:text-gray-300"></p>
+                </div>
+                <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4 space-y-2">
+                    <p class="text-xs uppercase text-gray-400">Conditions</p>
+                    <p id="modalProductConditions" class="text-sm text-gray-600 dark:text-gray-300"></p>
+                </div>
+                <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-4 space-y-2">
+                    <p class="text-xs uppercase text-gray-400">Return policy</p>
+                    <p id="modalProductReturnPolicy" class="text-sm text-gray-600 dark:text-gray-300"></p>
+                </div>
+                <div id="modalProductFlags" class="flex flex-wrap gap-2"></div>
+                <div class="flex justify-end gap-3">
+                    <button data-modal-close class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-8 md:py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <p class="text-sm text-gray-300">&copy; 2025 Developer Ace. All rights reserved.</p>
+                <div class="flex items-center gap-3 text-gray-400">
+                    <span class="text-sm">Need help?</span>
+                    <a href="mailto:support@kamertechmall.com" class="text-blue-400 hover:text-blue-300 text-sm">support@kamertechmall.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const STORAGE_KEY = 'sellerDashboardProducts';
+            const FALLBACK_IMAGE = 'images/banner-hero.jpeg';
+            const filters = { search: '', status: 'all' };
+            const demoProducts = [
+                {
+                    id: 101,
+                    name: 'Samsung Galaxy Buds 2 Pro',
+                    category: 'Accessories',
+                    status: 'published',
+                    oldPrice: 180000,
+                    newPrice: 160000,
+                    currentPrice: 150000,
+                    quantity: 26,
+                    size: 'Universal fit',
+                    color: 'Graphite',
+                    featuredPhoto: 'images/sony.webp',
+                    otherPhotos: ['images/sony.webp'],
+                    location: 'Douala, Cameroon',
+                    shopName: 'Kamer Tech Hub',
+                    description: 'Noise-cancelling wireless earbuds with 30 hrs battery life.',
+                    features: ['Active noise cancelling', '30h battery', 'Wireless charging'],
+                    conditions: 'Brand new, sealed box',
+                    returnPolicy: '7-day replacement',
+                    supplierPhone: '+237 650 000 001',
+                    supplierWhatsapp: '+237 650 000 001',
+                    isFeatured: true,
+                    isActive: true,
+                    updatedAt: new Date().toISOString()
+                },
+                {
+                    id: 102,
+                    name: 'Asus ROG Flow X13',
+                    category: 'Laptops',
+                    status: 'draft',
+                    oldPrice: 1050000,
+                    newPrice: 995000,
+                    currentPrice: 980000,
+                    quantity: 4,
+                    size: '13-inch',
+                    color: 'Black',
+                    featuredPhoto: 'images/laptops.webp',
+                    otherPhotos: ['images/laptops.webp'],
+                    location: 'Yaoundé, Cameroon',
+                    shopName: 'Pro Devices CM',
+                    description: '2-in-1 gaming ultrabook equipped with RTX graphics for creators.',
+                    features: ['Touchscreen', 'RTX graphics', 'Convertible design'],
+                    conditions: 'Brand new, limited stock',
+                    returnPolicy: '3-day inspection warranty',
+                    supplierPhone: '+237 650 000 002',
+                    supplierWhatsapp: '+237 650 000 002',
+                    isFeatured: false,
+                    isActive: true,
+                    updatedAt: new Date().toISOString()
+                },
+                {
+                    id: 103,
+                    name: 'Fitbit Sense 2',
+                    category: 'Wearables',
+                    status: 'archived',
+                    oldPrice: 260000,
+                    newPrice: 240000,
+                    currentPrice: 230000,
+                    quantity: 0,
+                    size: 'Adjustable',
+                    color: 'White Gold',
+                    featuredPhoto: 'images/watch 5.jpg',
+                    otherPhotos: ['images/watch 5.jpg'],
+                    location: 'Buea, Cameroon',
+                    shopName: 'Wellness Gadgets',
+                    description: 'Advanced health wearable with ECG, stress management, and GPS.',
+                    features: ['ECG monitoring', 'Stress tracking', 'GPS'],
+                    conditions: 'Refurbished, mint condition',
+                    returnPolicy: 'No returns on clearance items',
+                    supplierPhone: '+237 650 000 003',
+                    supplierWhatsapp: '+237 650 000 003',
+                    isFeatured: false,
+                    isActive: false,
+                    updatedAt: new Date().toISOString()
+                }
+            ];
+
+            let products = [];
+            let editingProductId = null;
+            let toastTimer;
+
+            const refs = {};
+            const currencyFormatter = new Intl.NumberFormat('en-US', { minimumFractionDigits: 0 });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                cacheRefs();
+                if (!refs.form) return;
+                bindEvents();
+                loadProducts();
+            });
+
+            function cacheRefs() {
+                refs.form = document.getElementById('sellerProductForm');
+                refs.formTitle = document.getElementById('sellerFormTitle');
+                refs.formSubtitle = document.getElementById('sellerFormSubtitle');
+                refs.submitBtn = document.getElementById('sellerFormSubmitBtn');
+                refs.cancelEditBtn = document.getElementById('cancelEditBtn');
+                refs.searchInput = document.getElementById('sellerSearchInput');
+                refs.statusFilter = document.getElementById('sellerStatusFilter');
+                refs.resetFiltersBtn = document.getElementById('clearSellerFilters');
+                refs.emptyStateResetBtn = document.getElementById('emptyStateReset');
+                refs.emptyState = document.getElementById('sellerEmptyState');
+                refs.tableBody = document.getElementById('dashboardTableBody');
+                refs.cardList = document.getElementById('dashboardCardList');
+                refs.toast = document.getElementById('dashboardToast');
+                refs.totalStat = document.getElementById('dashboardTotalProducts');
+                refs.publishedStat = document.getElementById('dashboardPublishedProducts');
+                refs.draftStat = document.getElementById('dashboardDraftProducts');
+                refs.revenueStat = document.getElementById('dashboardPotentialRevenue');
+                refs.resetDemoBtn = document.getElementById('resetDashboardBtn');
+                refs.modal = document.getElementById('productViewModal');
+                refs.modalImage = document.getElementById('modalProductImage');
+                refs.modalStatus = document.getElementById('modalProductStatus');
+                refs.modalName = document.getElementById('modalProductName');
+                refs.modalPrice = document.getElementById('modalProductPrice');
+                refs.modalUpdated = document.getElementById('modalProductUpdated');
+                refs.modalDescription = document.getElementById('modalProductDescription');
+                refs.modalCategory = document.getElementById('modalProductCategory');
+                refs.modalStock = document.getElementById('modalProductStock');
+                refs.modalShopName = document.getElementById('modalProductShopName');
+                refs.modalLocation = document.getElementById('modalProductLocation');
+                refs.modalSupplierPhone = document.getElementById('modalProductSupplierPhone');
+                refs.modalSupplierWhatsapp = document.getElementById('modalProductSupplierWhatsapp');
+                refs.modalFeatures = document.getElementById('modalProductFeatures');
+                refs.modalConditions = document.getElementById('modalProductConditions');
+                refs.modalReturnPolicy = document.getElementById('modalProductReturnPolicy');
+                refs.modalFlags = document.getElementById('modalProductFlags');
+            }
+
+            function bindEvents() {
+                refs.form.addEventListener('submit', handleFormSubmit);
+                refs.cancelEditBtn?.addEventListener('click', () => cancelEditingState(true));
+                refs.searchInput?.addEventListener('input', () => {
+                    filters.search = refs.searchInput.value.trim().toLowerCase();
+                    renderProducts();
+                });
+                refs.statusFilter?.addEventListener('change', () => {
+                    filters.status = refs.statusFilter.value;
+                    renderProducts();
+                });
+                refs.resetFiltersBtn?.addEventListener('click', resetFilters);
+                refs.emptyStateResetBtn?.addEventListener('click', resetFilters);
+                refs.resetDemoBtn?.addEventListener('click', resetDemoData);
+                refs.tableBody?.addEventListener('click', handleActionClick);
+                refs.cardList?.addEventListener('click', handleActionClick);
+                refs.modal?.querySelectorAll('[data-modal-close]')?.forEach(btn => {
+                    btn.addEventListener('click', closeModal);
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && refs.modal && refs.modal.classList.contains('flex')) {
+                        closeModal();
+                    }
+                });
+            }
+
+            function handleFormSubmit(event) {
+                event.preventDefault();
+                const formData = new FormData(refs.form);
+                const payload = buildPayload(formData);
+
+                if (!payload.name) {
+                    showToast('Product name is required', 'error');
+                    return;
+                }
+
+                if (editingProductId) {
+                    products = products.map(product => product.id === editingProductId
+                        ? { ...product, ...payload, updatedAt: new Date().toISOString() }
+                        : product
+                    );
+                    showToast('Product updated');
+                } else {
+                    products.unshift({
+                        id: generateProductId(),
+                        ...payload,
+                        updatedAt: new Date().toISOString()
+                    });
+                    showToast('Product published');
+                }
+
+                persistProducts();
+                renderProducts();
+                updateStats();
+                cancelEditingState(true);
+            }
+
+            function handleActionClick(event) {
+                const actionBtn = event.target.closest('[data-action]');
+                if (!actionBtn) return;
+                const productId = Number(actionBtn.dataset.productId);
+                if (Number.isNaN(productId)) return;
+                const action = actionBtn.dataset.action;
+
+                if (action === 'view') {
+                    openProductModal(productId);
+                } else if (action === 'edit') {
+                    startEditing(productId);
+                } else if (action === 'delete') {
+                    deleteProduct(productId);
+                }
+            }
+
+            function openProductModal(productId) {
+                const product = products.find(item => item.id === productId);
+                if (!product || !refs.modal) return;
+                refs.modalImage.src = getProductImage(product);
+                refs.modalImage.alt = product.name;
+                refs.modalStatus.textContent = getStatusLabel(product.status);
+                refs.modalStatus.className = `inline-flex items-center gap-2 text-xs font-semibold uppercase px-3 py-1 rounded-full ${getStatusClasses(product.status).replace('text-sm', '')}`;
+                refs.modalName.textContent = product.name;
+                refs.modalPrice.innerHTML = buildPriceHTML(product);
+                refs.modalUpdated.textContent = `Last updated • ${formatDate(product.updatedAt)}`;
+                refs.modalDescription.textContent = product.description || 'No description provided yet.';
+                refs.modalCategory.textContent = product.category || '—';
+                refs.modalStock.textContent = getProductQuantity(product) > 0 ? `${getProductQuantity(product)} units in stock` : 'Out of stock';
+                refs.modalShopName.textContent = product.shopName || '—';
+                refs.modalLocation.textContent = product.location || '—';
+                refs.modalSupplierPhone.textContent = product.supplierPhone || '—';
+                refs.modalSupplierWhatsapp.textContent = product.supplierWhatsapp || '—';
+                refs.modalFeatures.textContent = formatList(product.features) || 'No features listed';
+                refs.modalConditions.textContent = product.conditions || 'Not specified';
+                refs.modalReturnPolicy.textContent = product.returnPolicy || 'Not specified';
+                if (refs.modalFlags) refs.modalFlags.innerHTML = buildFlagsHTML(product);
+
+                refs.modal.classList.remove('hidden');
+                refs.modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            }
+
+            function closeModal() {
+                if (!refs.modal) return;
+                refs.modal.classList.add('hidden');
+                refs.modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            function startEditing(productId) {
+                const product = products.find(item => item.id === productId);
+                if (!product) return;
+                editingProductId = productId;
+
+                refs.form.productName.value = product.name || '';
+                refs.form.productCategory.value = product.category || 'Phones';
+                refs.form.productStatus.value = product.status || 'published';
+                refs.form.productOldPrice.value = product.oldPrice ?? '';
+                refs.form.productNewPrice.value = product.newPrice ?? '';
+                refs.form.productCurrentPrice.value = getProductPrice(product);
+                refs.form.productQuantity.value = getProductQuantity(product);
+                refs.form.productSize.value = product.size || '';
+                refs.form.productColor.value = product.color || '';
+                refs.form.productLocation.value = product.location || '';
+                refs.form.productShopName.value = product.shopName || '';
+                refs.form.supplierPhone.value = product.supplierPhone || '';
+                refs.form.supplierWhatsapp.value = product.supplierWhatsapp || '';
+                refs.form.productFeaturedPhoto.value = product.featuredPhoto || '';
+                refs.form.productOtherPhotos.value = formatList(product.otherPhotos);
+                refs.form.productDescription.value = product.description || '';
+                refs.form.productFeatures.value = formatList(product.features);
+                refs.form.productConditions.value = product.conditions || '';
+                refs.form.productReturnPolicy.value = product.returnPolicy || '';
+                refs.form.productIsFeatured.checked = Boolean(product.isFeatured);
+                refs.form.productIsActive.checked = product.isActive !== false;
+
+                refs.formTitle.textContent = 'Update product';
+                refs.formSubtitle.textContent = 'Make changes and save to update your storefront.';
+                refs.submitBtn.innerHTML = '<i class="fas fa-floppy-disk"></i> Save changes';
+                refs.cancelEditBtn?.classList.remove('hidden');
+                refs.cancelEditBtn?.classList.add('inline-flex');
+
+                refs.form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function cancelEditingState(resetForm = false) {
+                if (resetForm && refs.form) {
+                    refs.form.reset();
+                }
+                editingProductId = null;
+                refs.formTitle.textContent = 'Add a new product';
+                refs.formSubtitle.textContent = 'Provide product information and hit publish to make it live.';
+                refs.submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish product';
+                refs.cancelEditBtn?.classList.add('hidden');
+                refs.cancelEditBtn?.classList.remove('inline-flex');
+            }
+
+            function deleteProduct(productId) {
+                const product = products.find(item => item.id === productId);
+                if (!product) return;
+                if (!confirm(`Delete "${product.name}" from your catalog?`)) return;
+                products = products.filter(item => item.id !== productId);
+                if (editingProductId === productId) {
+                    cancelEditingState(true);
+                }
+                persistProducts();
+                renderProducts();
+                updateStats();
+                showToast('Product removed', 'warning');
+            }
+
+            function loadProducts() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (stored) {
+                        products = JSON.parse(stored);
+                    } else {
+                        products = cloneDemoProducts();
+                        persistProducts();
+                    }
+                } catch (error) {
+                    console.warn('Unable to read dashboard data, using defaults', error);
+                    products = cloneDemoProducts();
+                }
+                renderProducts();
+                updateStats();
+            }
+
+            function persistProducts() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+                } catch (error) {
+                    console.warn('Unable to save dashboard data', error);
+                }
+            }
+
+            function renderProducts() {
+                const filtered = products
+                    .filter(product => {
+                        if (filters.status !== 'all' && product.status !== filters.status) return false;
+                        if (!filters.search) return true;
+                        const haystack = [
+                            product.name,
+                            product.category,
+                            product.shopName,
+                            product.location
+                        ].filter(Boolean).map(str => str.toLowerCase());
+                        return haystack.some(text => text.includes(filters.search));
+                    })
+                    .sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0));
+
+                refs.emptyState?.classList.toggle('hidden', filtered.length > 0);
+                if (refs.tableBody) refs.tableBody.innerHTML = filtered.map(createTableRow).join('');
+                if (refs.cardList) refs.cardList.innerHTML = filtered.map(createCard).join('');
+            }
+
+            function createTableRow(product) {
+                const quantity = getProductQuantity(product);
+                return `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${getProductImage(product)}" alt="${product.name}" class="h-12 w-12 rounded-xl object-cover border border-gray-100 dark:border-gray-800">
+                                <div>
+                                    <p class="font-semibold text-gray-900 dark:text-white">${product.name}</p>
+                                    <p class="text-xs text-gray-500 max-w-xs truncate">${product.shopName || 'Unknown seller'} • ${product.location || 'No location'}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">${product.category || '—'}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex flex-col">
+                                <span class="font-semibold text-blue-600">${formatCurrency(getProductPrice(product))}</span>
+                                ${product.oldPrice ? `<span class="text-xs text-gray-400 line-through">${formatCurrency(product.oldPrice)}</span>` : ''}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center gap-2 ${quantity > 0 ? 'text-emerald-600' : 'text-rose-600'} font-semibold">
+                                <i class="fas ${quantity > 0 ? 'fa-check-circle' : 'fa-triangle-exclamation'}"></i>
+                                ${quantity > 0 ? `${quantity} units` : 'Out of stock'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex flex-wrap gap-2">
+                                ${buildStatusPill(product.status)}
+                                ${product.isFeatured ? buildBadge('Featured', 'bg-indigo-100 text-indigo-700') : ''}
+                                ${buildBadge(product.isActive === false ? 'Inactive' : 'Active', product.isActive === false ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700')}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-500">${formatDate(product.updatedAt)}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm" data-action="view" data-product-id="${product.id}">View</button>
+                                <button class="text-amber-600 hover:text-amber-700 font-semibold text-sm" data-action="edit" data-product-id="${product.id}">Edit</button>
+                                <button class="text-rose-600 hover:text-rose-700 font-semibold text-sm" data-action="delete" data-product-id="${product.id}">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            function createCard(product) {
+                const quantity = getProductQuantity(product);
+                return `
+                    <div class="border border-gray-100 dark:border-gray-800 rounded-2xl p-4 space-y-3 bg-white dark:bg-dark-card shadow-sm">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="font-semibold text-lg">${product.name}</p>
+                                <p class="text-sm text-blue-600 font-semibold">${formatCurrency(getProductPrice(product))}</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 justify-end">
+                                ${buildStatusPill(product.status)}
+                                ${product.isFeatured ? buildBadge('Featured', 'bg-indigo-100 text-indigo-700') : ''}
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500">${product.description || 'No description yet'}</p>
+                        <div class="grid grid-cols-2 gap-3 text-xs text-gray-500">
+                            <div>
+                                <p class="uppercase">Category</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">${product.category || '—'}</p>
+                            </div>
+                            <div>
+                                <p class="uppercase">Stock</p>
+                                <p class="font-semibold ${quantity > 0 ? 'text-emerald-600' : 'text-rose-600'}">
+                                    ${quantity > 0 ? `${quantity} units` : 'Out of stock'}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="uppercase">Shop</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">${product.shopName || '—'}</p>
+                            </div>
+                            <div>
+                                <p class="uppercase">Location</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">${product.location || '—'}</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400">Updated ${formatDate(product.updatedAt)}</p>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <button class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold" data-action="view" data-product-id="${product.id}">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-amber-200 text-amber-600 text-sm font-semibold" data-action="edit" data-product-id="${product.id}">
+                                <i class="fas fa-pen"></i>
+                                Edit
+                            </button>
+                            <button class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-rose-200 text-rose-600 text-sm font-semibold" data-action="delete" data-product-id="${product.id}">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function updateStats() {
+                const total = products.length;
+                const published = products.filter(item => item.status === 'published').length;
+                const drafts = products.filter(item => item.status === 'draft').length;
+                const potentialRevenue = products.reduce((acc, item) => acc + (getProductPrice(item) * getProductQuantity(item)), 0);
+
+                if (refs.totalStat) refs.totalStat.textContent = total;
+                if (refs.publishedStat) refs.publishedStat.textContent = published;
+                if (refs.draftStat) refs.draftStat.textContent = drafts;
+                if (refs.revenueStat) refs.revenueStat.textContent = formatCurrency(potentialRevenue);
+            }
+
+            function resetFilters() {
+                filters.search = '';
+                filters.status = 'all';
+                if (refs.searchInput) refs.searchInput.value = '';
+                if (refs.statusFilter) refs.statusFilter.value = 'all';
+                renderProducts();
+            }
+
+            function resetDemoData() {
+                if (!confirm('Reset dashboard to demo data? This will replace current entries.')) return;
+                products = cloneDemoProducts();
+                persistProducts();
+                renderProducts();
+                updateStats();
+                cancelEditingState(true);
+                showToast('Demo data restored');
+            }
+
+            function showToast(message, variant = 'success') {
+                if (!refs.toast) return;
+                refs.toast.textContent = message;
+                refs.toast.classList.remove('hidden', 'translate-y-6', 'opacity-0');
+                refs.toast.classList.add('pointer-events-auto');
+                refs.toast.style.backgroundColor = variant === 'error'
+                    ? '#dc2626'
+                    : variant === 'warning'
+                        ? '#f97316'
+                        : '#111827';
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    refs.toast.classList.add('translate-y-6', 'opacity-0');
+                    refs.toast.classList.remove('pointer-events-auto');
+                    setTimeout(() => refs.toast.classList.add('hidden'), 300);
+                }, 2400);
+            }
+
+            function buildPayload(formData) {
+                const otherPhotosRaw = (formData.get('productOtherPhotos') || '').trim();
+                const featuresRaw = (formData.get('productFeatures') || '').trim();
+                return {
+                    name: (formData.get('productName') || '').trim(),
+                    category: formData.get('productCategory') || 'Phones',
+                    status: formData.get('productStatus') || 'published',
+                    oldPrice: toNumber(formData.get('productOldPrice')),
+                    newPrice: toNumber(formData.get('productNewPrice')),
+                    currentPrice: toNumber(formData.get('productCurrentPrice')) ?? 0,
+                    quantity: toInteger(formData.get('productQuantity')),
+                    size: (formData.get('productSize') || '').trim(),
+                    color: (formData.get('productColor') || '').trim(),
+                    featuredPhoto: (formData.get('productFeaturedPhoto') || '').trim(),
+                    otherPhotos: normalizeList(otherPhotosRaw),
+                    location: (formData.get('productLocation') || '').trim(),
+                    shopName: (formData.get('productShopName') || '').trim(),
+                    description: (formData.get('productDescription') || '').trim(),
+                    features: normalizeList(featuresRaw),
+                    conditions: (formData.get('productConditions') || '').trim(),
+                    returnPolicy: (formData.get('productReturnPolicy') || '').trim(),
+                    supplierPhone: (formData.get('supplierPhone') || '').trim(),
+                    supplierWhatsapp: (formData.get('supplierWhatsapp') || '').trim(),
+                    isFeatured: formData.get('productIsFeatured') === 'on',
+                    isActive: formData.get('productIsActive') === 'on'
+                };
+            }
+
+            function getProductImage(product) {
+                return product.featuredPhoto || product.image || FALLBACK_IMAGE;
+            }
+
+            function getProductPrice(product) {
+                const candidates = [product.currentPrice, product.newPrice, product.oldPrice, product.price];
+                for (const value of candidates) {
+                    const number = Number(value);
+                    if (Number.isFinite(number) && number > 0) return number;
+                }
+                return 0;
+            }
+
+            function getProductQuantity(product) {
+                if (Number.isFinite(product.quantity)) return Number(product.quantity);
+                if (Number.isFinite(product.stock)) return Number(product.stock);
+                return 0;
+            }
+
+            function buildPriceHTML(product) {
+                const parts = [`<span class="text-2xl font-bold text-blue-600">${formatCurrency(getProductPrice(product))}</span>`];
+                if (Number.isFinite(product.oldPrice)) {
+                    parts.push(`<span class="text-sm text-gray-400 line-through">${formatCurrency(product.oldPrice)}</span>`);
+                }
+                if (Number.isFinite(product.newPrice)) {
+                    parts.push(`<span class="text-sm text-amber-500 font-semibold">${formatCurrency(product.newPrice)}</span>`);
+                }
+                return parts.join(' ');
+            }
+
+            function buildFlagsHTML(product) {
+                const flags = [];
+                if (product.size) flags.push(buildBadge(`Size: ${product.size}`, 'bg-gray-100 text-gray-700'));
+                if (product.color) flags.push(buildBadge(`Color: ${product.color}`, 'bg-gray-100 text-gray-700'));
+                if (product.isFeatured) flags.push(buildBadge('Featured', 'bg-indigo-100 text-indigo-700'));
+                flags.push(buildBadge(product.isActive === false ? 'Inactive' : 'Active', product.isActive === false ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700'));
+                return flags.join('');
+            }
+
+            function buildStatusPill(status) {
+                return `<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${getStatusClasses(status)}">
+                    <span class="h-2 w-2 rounded-full bg-current"></span>
+                    ${getStatusLabel(status)}
+                </span>`;
+            }
+
+            function buildBadge(label, classes) {
+                return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${classes}">${label}</span>`;
+            }
+
+            function formatCurrency(amount) {
+                const safeAmount = Number.isFinite(amount) ? amount : 0;
+                return `FCFA${currencyFormatter.format(Math.round(safeAmount))}`;
+            }
+
+            function formatDate(dateInput) {
+                if (!dateInput) return '—';
+                try {
+                    const date = new Date(dateInput);
+                    return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                } catch (error) {
+                    return '—';
+                }
+            }
+
+            function getStatusLabel(status) {
+                return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
+            }
+
+            function getStatusClasses(status) {
+                switch (status) {
+                    case 'published':
+                        return 'bg-emerald-100 text-emerald-700';
+                    case 'draft':
+                        return 'bg-amber-100 text-amber-700';
+                    case 'archived':
+                    default:
+                        return 'bg-gray-200 text-gray-700';
+                }
+            }
+
+            function formatList(value) {
+                if (Array.isArray(value)) return value.join(', ');
+                return value || '';
+            }
+
+            function normalizeList(value) {
+                if (!value) return [];
+                return value.split(/[
+,]/).map(entry => entry.trim()).filter(Boolean);
+            }
+
+            function toNumber(value) {
+                if (value === null || value === undefined || value === '') return null;
+                const parsed = Number(value);
+                return Number.isFinite(parsed) ? parsed : null;
+            }
+
+            function toInteger(value) {
+                const parsed = parseInt(value, 10);
+                return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+            }
+
+            function cloneDemoProducts() {
+                return demoProducts.map(product => ({
+                    ...product,
+                    otherPhotos: Array.isArray(product.otherPhotos) ? [...product.otherPhotos] : [],
+                    features: Array.isArray(product.features) ? [...product.features] : (product.features ? [product.features] : []),
+                    updatedAt: new Date().toISOString(),
+                    id: generateProductId()
+                }));
+            }
+
+            function generateProductId() {
+                return Date.now() + Math.floor(Math.random() * 1000);
+            }
+        })();
+    </script>
+
+</body>
+</html>
+

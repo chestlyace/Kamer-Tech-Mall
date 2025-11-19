@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Kamer Tech Mall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="Assets /styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        .goog-te-banner-frame.skiptranslate,
+        #goog-gt-tt,
+        .goog-te-gadget,
+        .goog-te-balloon-frame,
+        iframe.skiptranslate {
+            display: none !important;
+        }
+        body.translated-ltr {
+            top: 0 !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        #google_translate_element {
+            display: none !important;
+        }
+        .thumbnail-active {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        .gradient-border {
+            border-image: linear-gradient(135deg, #2563eb, #7c3aed) 1;
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
+
+    <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="hidden md:flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="images/logo.jpg" alt="Logo" class="h-8">
+                    </a>
+                </div>
+               
+                <div class="flex items-center space-x-4">
+                    <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        All Products
+                    </a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        About Us
+                    </a>
+                    <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="relative">
+                        <select id="languageSelector" onchange="changeLanguage(this.value)" class="text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                    <div id="google_translate_element" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="md:hidden">
+                <div class="flex justify-between items-center py-3">
+                    <div class="flex items-center">
+                        <a href="index.html">
+                            <img src="images/logo.jpg" alt="Logo" class="h-6">
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i classn building tech solutions for clients with various problems.    ="fas fa-moon"></i>
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div> 
+
+                <div id="mobileMenu" class="hidden pb-3">
+                    <div class="flex flex-col space-y-3">
+                        <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            All Products
+                        </a>
+                        <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            About Us
+                        </a>
+                        <div class="px-3">
+                            <select id="mobileLanguageSelector" onchange="changeLanguage(this.value)" class="w-full text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="google_translate_element" style="display:none;"></div>
+    </nav>
+
+    <div class="bg-white dark:bg-dark-card shadow-sm">
+        <div class="container mx-auto py-3 px-4 sm:px-6 lg:px-8">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center text-gray-400">
+                            <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                            <a href="shop.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                                Shop
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center text-blue-600 dark:text-blue-400">
+                            <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                            KamerTech UltraPhone X Pro
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <main class="pb-16">
+        <section class="py-8 sm:py-10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/2">
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-4 sm:p-5">
+                            <div class="relative bg-gray-50 dark:bg-gray-900 rounded-xl overflow-hidden">
+                                <img id="featuredImage" src="images/iphone13pm.webp" alt="KamerTech UltraPhone X Pro - featured image" class="w-full h-64 sm:h-[420px] object-cover">
+                                <span class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-xs uppercase tracking-wide">Featured</span>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-4" id="productThumbnails">
+                                <button type="button" class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition thumbnail-active" data-image="images/iphone13pm.webp" data-alt="KamerTech UltraPhone X Pro front view">
+                                    <img src="images/iphone13pm.webp" alt="Front view" class="w-full h-16 sm:h-20 object-cover">
+                                </button>
+                                <button type="button" class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition" data-image="images/macbook pro m2.webp" data-alt="Side profile">
+                                    <img src="images/macbook pro m2.webp" alt="Side profile" class="w-full h-16 sm:h-20 object-cover">
+                                </button>
+                                <button type="button" class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition" data-image="images/sony.webp" data-alt="Camera detail">
+                                    <img src="images/sony.webp" alt="Camera detail" class="w-full h-16 sm:h-20 object-cover">
+                                </button>
+                                <button type="button" class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition" data-image="images/watch 5.jpg" data-alt="Accessory bundle">
+                                    <img src="images/watch 5.jpg" alt="Accessory bundle" class="w-full h-16 sm:h-20 object-cover">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 space-y-6">
+                        <div>
+                            <p class="text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wide">KamerTech Exclusive</p>
+                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">KamerTech UltraPhone X Pro</h1>
+                            <p class="text-gray-600 dark:text-gray-300">Enterprise-ready flagship smartphone with AI-assisted productivity, triple-lens imaging, and 48-hour battery endurance.</p>
+                        </div>
+                        <div class="flex flex-wrap items-baseline gap-3 sm:gap-4">
+                            <span class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">FCFA490,000</span>
+                            <span class="text-gray-500 line-through">FCFA530,000</span>
+                            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">In Stock</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div class="bg-white dark:bg-dark-card rounded-xl p-4 sm:p-5 shadow border border-gray-100 dark:border-gray-800">
+                                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Key Highlights</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                                    <li class="flex items-start gap-2"><i class="fas fa-check-circle text-blue-500 mt-0.5"></i> Snapdragon Elite Gen 2 with dedicated AI co-processor</li>
+                                    <li class="flex items-start gap-2"><i class="fas fa-check-circle text-blue-500 mt-0.5"></i> 6.8" LTPO AMOLED display, 120Hz adaptive refresh</li>
+                                    <li class="flex items-start gap-2"><i class="fas fa-check-circle text-blue-500 mt-0.5"></i> Triple camera (200MP wide + 48MP periscope + 50MP ultra-wide)</li>
+                                    <li class="flex items-start gap-2"><i class="fas fa-check-circle text-blue-500 mt-0.5"></i> 48-hour battery with 65W SuperCharge + 15W wireless</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white dark:bg-dark-card rounded-xl p-4 sm:p-5 shadow border border-gray-100 dark:border-gray-800">
+                                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Quick Specs</h3>
+                                <dl class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                                    <div class="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+                                        <dt>Storage</dt>
+                                        <dd class="font-semibold">512 GB UFS 4.0</dd>
+                                    </div>
+                                    <div class="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+                                        <dt>Memory</dt>
+                                        <dd class="font-semibold">16 GB LPDDR5x</dd>
+                                    </div>
+                                    <div class="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+                                        <dt>Connectivity</dt>
+                                        <dd class="font-semibold">5G / Wi-Fi 7 / NFC</dd>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <dt>Colorway</dt>
+                                        <dd class="font-semibold">Graphite Aurora</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <a href="mailto:sales@kamertechmall.com?subject=Product%20Inquiry%20-%20KamerTech%20UltraPhone%20X%20Pro" class="w-full sm:flex-1 min-w-[220px] bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-xl font-semibold shadow-lg shadow-blue-200 transition">
+                                Contact Supplier
+                            </a>
+                            <a href="https://wa.me/237600000000?text=Hello%20Kamer%20Tech%20Mall%2C%20I%27d%20like%20to%20know%20more%20about%20the%20UltraPhone%20X%20Pro." target="_blank" rel="noopener" class="w-full sm:flex-1 min-w-[220px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-center py-3 rounded-xl font-semibold transition">
+                                Chat on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contactSupplier" class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-lg p-5 sm:p-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div>
+                            <p class="text-sm uppercase text-blue-600 font-semibold tracking-wide">Contact Supplier</p>
+                            <h2 class="text-2xl font-bold mt-1 mb-2">Tell us what you need and get tailored quotes</h2>
+                            <p class="text-gray-600 dark:text-gray-300">Provide order quantity, preferred shipping method, and any customization to receive an accurate quotation within 2 business hours.</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full md:w-auto">
+                            <div class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                <i class="fas fa-phone text-blue-600 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-500">Call</p>
+                                <a href="tel:+237600000000" class="block text-lg font-semibold text-blue-700">+237 600 000 000</a>
+                            </div>
+                            <div class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                <i class="fab fa-whatsapp text-green-500 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-500">WhatsApp</p>
+                                <a href="https://wa.me/237600000000" target="_blank" rel="noopener" class="block text-lg font-semibold text-blue-700">Chat now</a>
+                            </div>
+                            <div class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                <i class="fas fa-envelope text-blue-600 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-500">Email</p>
+                                <a href="mailto:sales@kamertechmall.com" class="block text-lg font-semibold text-blue-700">sales@kamertechmall.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <i class="fas fa-align-left text-blue-600"></i>
+                                </span>
+                                <h2 class="text-2xl font-bold">Description</h2>
+                            </div>
+                            <div class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <p>The KamerTech UltraPhone X Pro elevates productivity for modern teams with enterprise-grade security, AI-assisted workflows, and a pro-level imaging pipeline. Crafted from aerospace aluminum with a ceramic shield finish, it balances ultra-premium design with rugged durability.</p>
+                                <p>Adaptive refresh technology keeps visuals smooth while reducing battery drain, and the dual SIM + eSIM setup allows teams to stay reachable across markets. Enterprise provisioning tools integrate seamlessly with Microsoft Intune, Workspace ONE, and Google Admin Console for zero-touch deployments.</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li>Advanced biometric suite with in-display 3D sonic fingerprint reader</li>
+                                    <li>Secure element with tamper-resistant hardware encryption</li>
+                                    <li>Edge-to-edge Gorilla Glass Victus 2 with IP68 + IP69K certification</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <i class="fas fa-list text-blue-600"></i>
+                                </span>
+                                <h2 class="text-2xl font-bold">Characteristics</h2>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="p-4 sm:p-5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                                    <p class="text-xs uppercase text-gray-500">Processor</p>
+                                    <p class="text-lg font-semibold">Snapdragon Elite Gen 2</p>
+                                    <p class="text-sm text-gray-500">Octa-core 4nm with NPU</p>
+                                </div>
+                                <div class="p-4 sm:p-5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                                    <p class="text-xs uppercase text-gray-500">Display</p>
+                                    <p class="text-lg font-semibold">6.8" LTPO AMOLED</p>
+                                    <p class="text-sm text-gray-500">1-120Hz, 2,600 nits peak</p>
+                                </div>
+                                <div class="p-4 sm:p-5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                                    <p class="text-xs uppercase text-gray-500">Battery</p>
+                                    <p class="text-lg font-semibold">5,200 mAh</p>
+                                    <p class="text-sm text-gray-500">65W wired / 15W wireless</p>
+                                </div>
+                                <div class="p-4 sm:p-5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                                    <p class="text-xs uppercase text-gray-500">Security</p>
+                                    <p class="text-lg font-semibold">Secure Vault 2.0</p>
+                                    <p class="text-sm text-gray-500">EAL5+ certified hardware</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center">
+                                    <i class="fas fa-clipboard-check text-green-600"></i>
+                                </span>
+                                <h2 class="text-xl font-bold">Conditions</h2>
+                            </div>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                                <li class="flex gap-3">
+                                    <i class="fas fa-box text-blue-500 mt-1"></i>
+                                    Ships brand-new, factory sealed, CE certified.
+                                </li>
+                                <li class="flex gap-3">
+                                    <i class="fas fa-shipping-fast text-blue-500 mt-1"></i>
+                                    Lead time 3–5 business days within Cameroon, 7–10 days regionally.
+                                </li>
+                                <li class="flex gap-3">
+                                    <i class="fas fa-exchange-alt text-blue-500 mt-1"></i>
+                                    Returns accepted within 14 days for unused units.
+                                </li>
+                                <li class="flex gap-3">
+                                    <i class="fas fa-file-contract text-blue-500 mt-1"></i>
+                                    Volume discounts from 10 units, NDA available on request.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-purple-600"></i>
+                                </span>
+                                <h2 class="text-xl font-bold">Guarantee</h2>
+                            </div>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                                <li class="flex gap-3">
+                                    <i class="fas fa-certificate text-yellow-500 mt-1"></i>
+                                    24-month manufacturer guarantee covering hardware defects.
+                                </li>
+                                <li class="flex gap-3">
+                                    <i class="fas fa-tools text-yellow-500 mt-1"></i>
+                                    Priority repair or device swap within 72h for business accounts.
+                                </li>
+                                <li class="flex gap-3">
+                                    <i class="fas fa-user-shield text-yellow-500 mt-1"></i>
+                                    Optional accidental damage protection & device management add-ons.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
+                            <i class="fas fa-images text-indigo-600"></i>
+                        </span>
+                        <h2 class="text-2xl font-bold">Product Images</h2>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">Use these high-definition visuals for listings, catalogues, or client proposals.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src="images/airpods pro.jpg" alt="Packaging overview" class="w-full h-36 sm:h-40 object-cover">
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src="images/ipad.webp" alt="Display close-up" class="w-full h-36 sm:h-40 object-cover">
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src="images/xps 13.jpg" alt="Accessories laid out" class="w-full h-36 sm:h-40 object-cover">
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
+                            <img src="images/phones2.webp" alt="Lifestyle shot" class="w-full h-36 sm:h-40 object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center">
+                            <i class="fas fa-th-large text-pink-600"></i>
+                        </span>
+                        <h2 class="text-2xl font-bold">Related Products</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-6">
+                        <div class="border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition flex flex-col">
+                            <img src="images/iphone13pm.webp" alt="NovaPhone Edge 2" class="w-full h-40 sm:h-48 object-cover">
+                            <div class="p-4 flex flex-col flex-1">
+                                <h3 class="text-lg font-semibold mb-2">NovaPhone Edge 2</h3>
+                                <p class="text-blue-600 font-bold text-xl mb-4">FCFA420,000</p>
+                                <a href="product.html" class="mt-auto text-center bg-gray-100 dark:bg-gray-800 text-blue-600 font-semibold py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View Product</a>
+                            </div>
+                        </div>
+                        <div class="border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition flex flex-col">
+                            <img src="images/macbook pro m2.webp" alt="KamerBook Studio 16" class="w-full h-40 sm:h-48 object-cover">
+                            <div class="p-4 flex flex-col flex-1">
+                                <h3 class="text-lg font-semibold mb-2">KamerBook Studio 16</h3>
+                                <p class="text-blue-600 font-bold text-xl mb-4">FCFA1,150,000</p>
+                                <a href="product.html" class="mt-auto text-center bg-gray-100 dark:bg-gray-800 text-blue-600 font-semibold py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View Product</a>
+                            </div>
+                        </div>
+                        <div class="border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition flex flex-col">
+                            <img src="images/sony.webp" alt="Pulse ANC Headset" class="w-full h-40 sm:h-48 object-cover">
+                            <div class="p-4 flex flex-col flex-1">
+                                <h3 class="text-lg font-semibold mb-2">Pulse ANC Headset</h3>
+                                <p class="text-blue-600 font-bold text-xl mb-4">FCFA95,000</p>
+                                <a href="product.html" class="mt-auto text-center bg-gray-100 dark:bg-gray-800 text-blue-600 font-semibold py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View Product</a>
+                            </div>
+                        </div>
+                        <div class="border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition flex flex-col">
+                            <img src="images/ipad.webp" alt="Tab Infinity 12.9" class="w-full h-40 sm:h-48 object-cover">
+                            <div class="p-4 flex flex-col flex-1">
+                                <h3 class="text-lg font-semibold mb-2">Tab Infinity 12.9</h3>
+                                <p class="text-blue-600 font-bold text-xl mb-4">FCFA610,000</p>
+                                <a href="product.html" class="mt-auto text-center bg-gray-100 dark:bg-gray-800 text-blue-600 font-semibold py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-3">About Us</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-blue-400">Our Story</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Customer Service</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-blue-400">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Returns</a></li>
+                        <li><a href="#" class="hover:text-blue-400">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Connect With Us</h3>
+                    <div class="flex space-x-4 text-xl">
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Subscribe for weekly tech drops and exclusive deals.</p>
+                    <form class="flex flex-col sm:flex-row">
+                        <input type="email" placeholder="Enter your email" class="w-full px-3 py-2 rounded-lg sm:rounded-r-none sm:rounded-l-lg text-gray-900 mb-3 sm:mb-0">
+                        <button class="bg-blue-600 px-4 py-2 rounded-lg sm:rounded-l-none sm:rounded-r-lg hover:bg-blue-700">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
+                &copy; 2025 Kamer Tech Mall. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="Assets /scripts/products.js"></script>
+    <script src="Assets /scripts/search-feature.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const featuredImage = document.getElementById('featuredImage');
+            const thumbnailButtons = document.querySelectorAll('#productThumbnails button');
+
+            thumbnailButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const newImage = button.getAttribute('data-image');
+                    const newAlt = button.getAttribute('data-alt');
+
+                    featuredImage.src = newImage;
+                    featuredImage.alt = newAlt;
+
+                    thumbnailButtons.forEach(btn => btn.classList.remove('thumbnail-active'));
+                    button.classList.add('thumbnail-active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
