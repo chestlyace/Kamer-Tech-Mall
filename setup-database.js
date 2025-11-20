@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 
 async function setupDatabase() {
   let connection;
-  
+
   try {
     // Create connection without database
     connection = await mysql.createConnection({
@@ -35,6 +35,7 @@ async function setupDatabase() {
         address TEXT,
         verified BOOLEAN DEFAULT FALSE,
         status ENUM('pending', 'active', 'suspended') DEFAULT 'pending',
+        role ENUM('seller', 'admin') DEFAULT 'seller',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         INDEX idx_email (email),

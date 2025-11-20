@@ -24,9 +24,19 @@ function checkSellerStatus(req, res, next) {
   next();
 }
 
+// Check if user is admin
+function isAdmin(req, res, next) {
+  if (req.session && req.session.sellerId && req.session.sellerRole === 'admin') {
+    return next();
+  }
+  req.flash('error', 'Access denied. Admin privileges required.');
+  res.redirect('/seller/dashboard');
+}
+
 module.exports = {
   isAuthenticated,
   isGuest,
-  checkSellerStatus
+  checkSellerStatus,
+  isAdmin
 };
 

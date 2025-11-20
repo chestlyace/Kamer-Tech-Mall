@@ -5,14 +5,14 @@ class Seller {
   // Register a new seller
   static async create(sellerData) {
     const { username, email, password, businessName, phone, address } = sellerData;
-    
+
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
     if (dbType === 'mysql') {
       const query = `
-        INSERT INTO sellers (username, email, password_hash, business_name, phone, address)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO sellers (username, email, password_hash, business_name, phone, address, role)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
       const result = await database.query(query, [
         username,
@@ -20,14 +20,16 @@ class Seller {
         passwordHash,
         businessName,
         phone || null,
-        address || null
+        address || null,
+        sellerData.role || 'seller'
       ]);
-      
+
       return {
         id: result.insertId,
         username,
         email,
-        businessName
+        businessName,
+        role: sellerData.role || 'seller'
       };
     } else if (dbType === 'supabase') {
       const supabase = database.getClient();
@@ -39,11 +41,12 @@ class Seller {
           password_hash: passwordHash,
           business_name: businessName,
           phone: phone || null,
-          address: address || null
+          address: address || null,
+          role: sellerData.role || 'seller'
         }])
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     }
@@ -62,7 +65,7 @@ class Seller {
         .select('*')
         .eq('email', email)
         .single();
-      
+
       if (error && error.code !== 'PGRST116') throw error;
       return data;
     }
@@ -81,7 +84,7 @@ class Seller {
         .select('*')
         .eq('username', username)
         .single();
-      
+
       if (error && error.code !== 'PGRST116') throw error;
       return data;
     }
@@ -100,7 +103,7 @@ class Seller {
         .select('*')
         .eq('id', id)
         .single();
-      
+
       if (error && error.code !== 'PGRST116') throw error;
       return data;
     }
@@ -114,7 +117,7 @@ class Seller {
   // Update seller profile
   static async update(id, updateData) {
     const { businessName, phone, address } = updateData;
-    
+
     if (dbType === 'mysql') {
       const query = `
         UPDATE sellers 
@@ -135,7 +138,7 @@ class Seller {
         .eq('id', id)
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     }
@@ -155,7 +158,7 @@ class Seller {
         .eq('id', id)
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     }
@@ -172,7 +175,27 @@ class Seller {
         .from('sellers')
         .select('id, username, email, business_name, status, verified, created_at')
         .order('created_at', { ascending: false });
-      
+
+      if (error) throw error;
+      return data;
+    }
+  }
+
+  // Make user an admin
+  static async makeAdmin(id) {
+    if (dbType === 'mysql') {
+      const query = 'UPDATE sellers SET role = ? WHERE id = ?';
+      await database.query(query, ['admin', id]);
+      return await this.findById(id);
+    } else if (dbType === 'supabase') {
+      const supabase = database.getClient();
+      const { data, error } = await supabase
+        .from('sellers')
+        .update({ role: 'admin' })
+        .eq('id', id)
+        .select()
+        .single();
+
       if (error) throw error;
       return data;
     }

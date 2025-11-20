@@ -420,170 +420,15 @@
             <!-- Product Grid -->
             <div class="lg:w-3/4">
                 <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Product Card 1 -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="iPhone 13 Pro" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">iPhone 13 Pro</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">$1099.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
+                    <!-- Products will be loaded dynamically here -->
+                    <div class="col-span-full text-center py-12 hidden" id="loadingSpinner">
+                        <i class="fas fa-spinner fa-spin fa-3x text-blue-600"></i>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Loading products...</p>
                     </div>
-
-                    <!-- Product Card 2 - MacBook Pro M2 -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="MacBook Pro M2" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">MacBook Pro M2</h3>
-                                <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">$1499.99</span>
-                                </div>
-                            </div>  
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
+                    <div class="col-span-full text-center py-12 hidden" id="noProductsMessage">
+                        <i class="fas fa-box-open fa-3x text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 dark:text-gray-400">No products found matching your criteria.</p>
                     </div>
-
-                    <!-- Product Card 3 - Samsung Galaxy S22 -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="Samsung Galaxy S22" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">Samsung Galaxy S22</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">$764.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 4 - AirPods Pro -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="AirPods Pro" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">AirPods Pro</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">FCFA249.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 5 - Dell XPS 13 -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="Dell XPS 13" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">Dell XPS 13</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">FCFA974.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 6 - Sony WH-1000XM4 -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="Sony WH-1000XM4" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">Sony WH-1000XM4</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">FCFA349.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 7 - iPad Pro -->
-                    <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group">
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x300" alt="iPad Pro" class="w-full h-48 object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                </div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">iPad Pro 12.9"</h3>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">Description</p>
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <span class="text-xl font-bold text-blue-600 dark:text-blue-400">FCFA989.99</span>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                    <a href="product.html" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
-                                    View Product
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- More product cards will be similar to this one -->
-                    <!-- Add more product cards here -->
-
                 </div>
             </div>
         </div>
@@ -639,7 +484,88 @@
     <script>
        
 
-        // // Language translation function
+        // Fetch and display products
+        async function loadProducts(filters = {}) {
+            const productGrid = document.getElementById('productGrid');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const noProductsMessage = document.getElementById('noProductsMessage');
+
+            // Show loading spinner
+            loadingSpinner.classList.remove('hidden');
+            noProductsMessage.classList.add('hidden');
+            
+            // Clear existing products (except spinner and message)
+            Array.from(productGrid.children).forEach(child => {
+                if (child.id !== 'loadingSpinner' && child.id !== 'noProductsMessage') {
+                    child.remove();
+                }
+            });
+
+            try {
+                // Build query string
+                const params = new URLSearchParams();
+                if (filters.category) params.append('category', filters.category);
+                if (filters.search) params.append('search', filters.search);
+                if (filters.minPrice) params.append('minPrice', filters.minPrice);
+                if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
+                if (filters.inStock) params.append('inStock', 'true');
+                if (filters.sort) params.append('sort', filters.sort);
+
+                const response = await fetch(`/api/products?${params.toString()}`);
+                const data = await response.json();
+
+                loadingSpinner.classList.add('hidden');
+
+                if (data.success && data.products.length > 0) {
+                    data.products.forEach(product => {
+                        const productCard = createProductCard(product);
+                        productGrid.appendChild(productCard);
+                    });
+                } else {
+                    noProductsMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                loadingSpinner.classList.add('hidden');
+                noProductsMessage.querySelector('p').textContent = 'Error loading products. Please try again later.';
+                noProductsMessage.classList.remove('hidden');
+            }
+        }
+
+        function createProductCard(product) {
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden group';
+            
+            const imageUrl = product.featured_photo ? `/uploads/${product.featured_photo}` : 'https://via.placeholder.com/300x300';
+            
+            div.innerHTML = `
+                <div class="relative">
+                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-2">${product.name}</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mb-2 line-clamp-2">${product.description || ''}</p>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="text-xl font-bold text-blue-600 dark:text-blue-400">FCFA${product.current_price.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="product.html?id=${product.id}" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
+                            View Product
+                        </a>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+        });
         // function changeLanguage(lang) {
         //     localStorage.setItem('selectedLanguage', lang);
             

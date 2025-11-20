@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Home Page</title>
+    <title><%= title %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script type="text/javascript">
@@ -137,8 +137,8 @@
             <!-- Desktop Navigation -->
             <div class="hidden md:flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <a href="index.html">
-                        <img src="images/logo.jpg" alt="Logo" class="h-8">
+                    <a href="/">
+                        <img src="/images/logo.jpg" alt="Logo" class="h-8">
                     </a>
                 </div>
                 <div class="flex-grow mx-4 relative max-w-md">
@@ -157,15 +157,24 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                    <a href="/shop" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
                         All Products
                     </a>
-                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                    <a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
                         About Us
                     </a>
-                    <a href="seller_dashboard.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
-                        Seller Dashboard
-                    </a>
+                    <% if (seller) { %>
+                        <a href="/seller/dashboard" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                            Seller Dashboard
+                        </a>
+                        <a href="/auth/logout" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                            Logout
+                        </a>
+                    <% } else { %>
+                        <a href="/auth/login" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                            Seller Login
+                        </a>
+                    <% } %>
                     <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -184,8 +193,8 @@
                 <!-- Mobile Header -->
                 <div class="flex justify-between items-center py-3">
                     <div class="flex items-center">
-                        <a href="index.html">
-                            <img src="images/logo.jpg" alt="Logo" class="h-6">
+                        <a href="/">
+                            <img src="/images/logo.jpg" alt="Logo" class="h-6">
                         </a>
                     </div>
                     <div class="flex items-center space-x-3">
@@ -218,15 +227,24 @@
                 <!-- Mobile Menu -->
                 <div id="mobileMenu" class="hidden pb-3">
                     <div class="flex flex-col space-y-3">
-                        <a href="shop.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <a href="/shop" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                             All Products
                         </a>
-                        <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <a href="/about" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                             About Us
                         </a>
-                        <a href="seller_dashboard.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Seller Dashboard
-                        </a>
+                        <% if (seller) { %>
+                            <a href="/seller/dashboard" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                Seller Dashboard
+                            </a>
+                            <a href="/auth/logout" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                Logout
+                            </a>
+                        <% } else { %>
+                            <a href="/auth/login" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                Seller Login
+                            </a>
+                        <% } %>
                         <div class="px-3">
                             <select id="mobileLanguageSelector" onchange="changeLanguage(this.value)" class="w-full text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
                                 <option value="en">English</option>
@@ -249,12 +267,12 @@
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">Tech Deals of the Week</h1>
                     <p class="text-lg sm:text-xl mb-6 md:mb-8">Up to 50% off on latest gadgets and accessories</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <a href="shop.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">Shop Now</a>
-                        <a href="#" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">Learn More</a>
+                        <a href="/shop" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">Shop Now</a>
+                        <a href="/about" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">Learn More</a>
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 mt-8 md:mt-0">
-                    <img src="images/banner-hero.jpeg" alt="Hero Banner" class="rounded-lg shadow-xl w-full max-w-md mx-auto md:max-w-none">
+                    <img src="/images/banner-hero.jpeg" alt="Hero Banner" class="rounded-lg shadow-xl w-full max-w-md mx-auto md:max-w-none">
                 </div>
             </div>
         </div>
@@ -266,26 +284,26 @@
             <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Shop by Category</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="images/phones2.webp" alt="Phones" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <img src="/images/phones2.webp" alt="Phones" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg md:text-xl font-bold mb-2">Phones</h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">Latest smartphones from top brands</p>
-                    <a href="shop.html?category=Phones" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                    <a href="/shop?category=Phones" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
                         Browse Phones <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="images/laptops.webp" alt="Laptops" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <img src="/images/laptops.webp" alt="Laptops" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg md:text-xl font-bold mb-2">Laptops</h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">High-performance laptops for work and play</p>
-                    <a href="shop.html?category=Laptops" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                    <a href="/shop?category=Laptops" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
                         Browse Laptops <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
                 <div class="bg-white dark:bg-dark-card p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 sm:col-span-2 md:col-span-1">
-                    <img src="images/accessories.webp" alt="Accessories" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
+                    <img src="/images/accessories.webp" alt="Accessories" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg md:text-xl font-bold mb-2">Accessories</h3>
                     <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base">Essential accessories for your devices</p>
-                    <a href="shop.html?category=Accessories" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                    <a href="/shop?category=Accessories" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
                         Browse Accessories <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -297,17 +315,34 @@
     <section class="py-8 md:py-12 bg-gray-300 dark:bg-dark-bg">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-8">Featured Products</h2>
-            <div id="featuredProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                <!-- Featured products will be loaded dynamically here -->
-                <div class="col-span-full text-center py-12 hidden" id="loadingSpinner">
-                    <i class="fas fa-spinner fa-spin fa-3x text-blue-600"></i>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400">Loading featured products...</p>
+            <% if (featuredProducts && featuredProducts.length > 0) { %>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <% featuredProducts.forEach(function(product) { %>
+                        <div class="bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                            <div class="relative">
+                                <img src="<%= product.featured_photo || '/images/banner-hero.jpeg' %>" alt="<%= product.name %>" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4" onerror="this.src='/images/banner-hero.jpeg'">
+                            </div>
+                            <h3 class="font-bold text-base md:text-lg mb-2"><%= product.name %></h3>
+                            <div class="flex justify-between items-center mb-3 md:mb-4">
+                                <div>
+                                    <% if (product.old_price) { %>
+                                        <span class="text-gray-500 line-through text-sm">FCFA<%= product.old_price.toLocaleString() %></span>
+                                    <% } %>
+                                    <span class="text-lg md:text-xl font-bold text-blue-600">FCFA<%= product.current_price.toLocaleString() %></span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="/product/<%= product.id %>" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base text-center">View Product</a>
+                            </div>
+                        </div>
+                    <% }); %>
                 </div>
-                <div class="col-span-full text-center py-12 hidden" id="noProductsMessage">
-                    <i class="fas fa-box-open fa-3x text-gray-400 mb-4"></i>
-                    <p class="text-gray-600 dark:text-gray-400">No featured products found.</p>
+            <% } else { %>
+                <div class="text-center py-12">
+                    <p class="text-gray-500 dark:text-gray-400 text-lg">No featured products available yet.</p>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-2">Check back soon for amazing deals!</p>
                 </div>
-            </div>
+            <% } %>
         </div>
     </section>
 
@@ -365,8 +400,8 @@
             </div>
         </div>
     </footer>
-    <script src="products.js"></script>
-    <script src="search-feature.js"></script>
+    <script src="/assets/scripts/products.js"></script>
+    <script src="/assets /scripts/search-feature.js"></script>
     <script>
       
 
@@ -479,91 +514,5 @@
         // });
     </script>
 
-    <script>
-        // Fetch and display featured products
-        async function loadFeaturedProducts() {
-            const grid = document.getElementById('featuredProductsGrid');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const noProductsMessage = document.getElementById('noProductsMessage');
-
-            // Show loading spinner
-            loadingSpinner.classList.remove('hidden');
-            noProductsMessage.classList.add('hidden');
-            
-            // Clear existing products (except spinner and message)
-            Array.from(grid.children).forEach(child => {
-                if (child.id !== 'loadingSpinner' && child.id !== 'noProductsMessage') {
-                    child.remove();
-                }
-            });
-
-            try {
-                const response = await fetch('/api/products?sort=featured');
-                const data = await response.json();
-
-                loadingSpinner.classList.add('hidden');
-
-                if (data.success && data.products.length > 0) {
-                    // Limit to 8 products for the home page
-                    const products = data.products.slice(0, 8);
-                    
-                    products.forEach(product => {
-                        const productCard = createProductCard(product);
-                        grid.appendChild(productCard);
-                    });
-                } else {
-                    noProductsMessage.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Error loading featured products:', error);
-                loadingSpinner.classList.add('hidden');
-                noProductsMessage.querySelector('p').textContent = 'Error loading products. Please try again later.';
-                noProductsMessage.classList.remove('hidden');
-            }
-        }
-
-        function createProductCard(product) {
-            const div = document.createElement('div');
-            div.className = 'bg-white dark:bg-dark-card p-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300';
-            
-            const imageUrl = product.featured_photo ? `/uploads/${product.featured_photo}` : 'https://via.placeholder.com/300x300';
-            
-            // Calculate discount if old price exists
-            let priceHtml = '';
-            if (product.old_price && product.old_price > product.current_price) {
-                priceHtml = `
-                    <div>
-                        <span class="text-gray-500 line-through text-sm">FCFA${product.old_price.toLocaleString()}</span>
-                        <span class="text-lg md:text-xl font-bold text-blue-600">FCFA${product.current_price.toLocaleString()}</span>
-                    </div>
-                `;
-            } else {
-                priceHtml = `
-                    <div>
-                        <span class="text-lg md:text-xl font-bold text-blue-600">FCFA${product.current_price.toLocaleString()}</span>
-                    </div>
-                `;
-            }
-
-            div.innerHTML = `
-                <div class="relative">
-                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-40 md:h-48 object-cover rounded-lg mb-4">
-                </div>
-                <h3 class="font-bold text-base md:text-lg mb-2">${product.name}</h3>
-                <div class="flex justify-between items-center mb-3 md:mb-4">
-                    ${priceHtml}
-                </div>
-                <div class="flex space-x-2">
-                    <a href="product.html?id=${product.id}" class="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base text-center">View Product</a>
-                </div>
-            `;
-            return div;
-        }
-
-        // Initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadFeaturedProducts();
-        });
-    </script>
 </body>
 </html>

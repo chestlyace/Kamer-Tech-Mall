@@ -47,7 +47,7 @@ router.post('/register', isGuest, [
     .trim()
 ], async (req, res) => {
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     return res.render('auth/register', {
       title: 'Seller Registration',
@@ -121,7 +121,7 @@ router.post('/login', isGuest, [
     .withMessage('Password is required')
 ], async (req, res) => {
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     return res.render('auth/login', {
       title: 'Seller Login',
@@ -163,9 +163,15 @@ router.post('/login', isGuest, [
     req.session.sellerUsername = seller.username;
     req.session.sellerEmail = seller.email;
     req.session.sellerStatus = seller.status;
+    req.session.sellerRole = seller.role;
 
     req.flash('success', `Welcome back, ${seller.username}!`);
-    res.redirect('/seller/dashboard');
+
+    if (seller.role === 'admin') {
+      res.redirect('/admin/dashboard');
+    } else {
+      res.redirect('/seller/dashboard');
+    }
   } catch (error) {
     console.error('Login error:', error);
     res.render('auth/login', {

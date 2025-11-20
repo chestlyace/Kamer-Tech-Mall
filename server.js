@@ -53,20 +53,24 @@ app.use((req, res, next) => {
 });
 
 // Static files
+app.use('/assets', express.static(path.join(__dirname, 'Assets ')));
 app.use('/assets', express.static(path.join(__dirname, 'Assets')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'public')));
+// Serve static HTML files (for backward compatibility)
+app.use(express.static(path.join(__dirname)));
 
 // Routes
+const publicRoutes = require('./routes/public');
 const authRoutes = require('./routes/auth');
 const sellerRoutes = require('./routes/seller');
+const adminRoutes = require('./routes/admin');
 
+// Public routes (home, shop, etc.)
 app.use('/auth', authRoutes);
 app.use('/seller', sellerRoutes);
-
-// Home route
-app.get('/', (req, res) => {
-  res.render('home', { title: 'Kamer Tech Mall - Seller Portal' });
-});
+app.use('/admin', adminRoutes);
+app.use('/', publicRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -241,6 +241,147 @@ class Product {
       };
     }
   }
+
+  // Get all published products (public access)
+  static async getPublishedProducts(filters = {}) {
+    if (dbType === 'mysql') {
+      let query = `
+        SELECT p.*, s.business_name, s.username as seller_username
+        FROM products p
+        JOIN sellers s ON p.seller_id = s.id
+        WHERE p.status = 'published' AND p.is_active = TRUE
+      `;
+      const params = [];
+
+      if (filters.category) {
+        query += ' AND p.category = ?';
+        params.push(filters.category);
+      }
+
+      if (filters.search) {
+        query += ' AND (p.name LIKE ? OR p.description LIKE ? OR p.category LIKE ?)';
+        const searchTerm = `%${filters.search}%`;
+        params.push(searchTerm, searchTerm, searchTerm);
+      }
+
+      if (filters.minPrice) {
+        query += ' AND p.current_price >= ?';
+        params.push(filters.minPrice);
+      }
+
+      if (filters.maxPrice) {
+        query += ' AND p.current_price <= ?';
+        params.push(filters.maxPrice);
+      }
+
+      if (filters.inStockOnly) {
+        query += ' AND p.quantity > 0';
+      }
+
+      // Sorting
+      switch (filters.sortBy) {
+        case 'price-low-high':
+          query += ' ORDER BY p.current_price ASC';
+          break;
+        case 'price-high-low':
+          query += ' ORDER BY p.current_price DESC';
+          break;
+        case 'latest':
+          query += ' ORDER BY p.created_at DESC';
+          break;
+        case 'featured':
+          query += ' ORDER BY p.is_featured DESC, p.created_at DESC';
+          break;
+        default:
+          query += ' ORDER BY p.is_featured DESC, p.created_at DESC';
+      }
+
+      return await database.query(query, params);
+    } else if (dbType === 'supabase') {
+      const supabase = database.getClient();
+      let query = supabase
+        .from('products')
+        .select(`
+          *,
+          sellers!inner(business_name, username)
+        `)
+        .eq('status', 'published')
+        .eq('is_active', true);
+
+      if (filters.category) {
+        query = query.eq('category', filters.category);
+      }
+
+      if (filters.search) {
+        query = query.or(`name.ilike.%${filters.search}%,description.ilike.%${filters.search}%,category.ilike.%${filters.search}%`);
+      }
+
+      if (filters.minPrice) {
+        query = query.gte('current_price', filters.minPrice);
+      }
+
+      if (filters.maxPrice) {
+        query = query.lte('current_price', filters.maxPrice);
+      }
+
+      if (filters.inStockOnly) {
+        query = query.gt('quantity', 0);
+      }
+
+      // Sorting
+      switch (filters.sortBy) {
+        case 'price-low-high':
+          query = query.order('current_price', { ascending: true });
+          break;
+        case 'price-high-low':
+          query = query.order('current_price', { ascending: false });
+          break;
+        case 'latest':
+          query = query.order('created_at', { ascending: false });
+          break;
+        case 'featured':
+          query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false });
+          break;
+        default:
+          query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false });
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+      return data;
+    }
+  }
+
+  // Get featured products
+  static async getFeaturedProducts(limit = 8) {
+    if (dbType === 'mysql') {
+      const query = `
+        SELECT p.*, s.business_name, s.username as seller_username
+        FROM products p
+        JOIN sellers s ON p.seller_id = s.id
+        WHERE p.status = 'published' AND p.is_active = TRUE AND p.is_featured = TRUE
+        ORDER BY p.created_at DESC
+        LIMIT ?
+      `;
+      return await database.query(query, [limit]);
+    } else if (dbType === 'supabase') {
+      const supabase = database.getClient();
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          *,
+          sellers!inner(business_name, username)
+        `)
+        .eq('status', 'published')
+        .eq('is_active', true)
+        .eq('is_featured', true)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+      
+      if (error) throw error;
+      return data;
+    }
+  }
 }
 
 module.exports = Product;

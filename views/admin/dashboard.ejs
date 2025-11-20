@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Kamer Tech Mall
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#475569',
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#e5e5e5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-dark-text transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-dark-card shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold text-primary">Kamer Tech Mall <span
+                    class="text-xs bg-red-500 text-white px-2 py-1 rounded ml-2">ADMIN</span></a>
+            <div class="flex items-center space-x-4">
+                <span class="hidden md:inline">Welcome, <%= user.sellerUsername %></span>
+                <a href="/auth/logout" class="text-red-500 hover:text-red-700"><i class="fas fa-sign-out-alt"></i>
+                    Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 container mx-auto px-4 pb-12">
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Total Users</p>
+                        <h3 class="text-2xl font-bold">
+                            <%= stats.totalUsers %>
+                        </h3>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                        <i class="fas fa-users fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Active Users</p>
+                        <h3 class="text-2xl font-bold">
+                            <%= stats.activeUsers %>
+                        </h3>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-full text-green-600">
+                        <i class="fas fa-user-check fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Pending Users</p>
+                        <h3 class="text-2xl font-bold">
+                            <%= stats.pendingUsers %>
+                        </h3>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-full text-yellow-600">
+                        <i class="fas fa-user-clock fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Total Products</p>
+                        <h3 class="text-2xl font-bold">
+                            <%= stats.totalProducts %>
+                        </h3>
+                    </div>
+                    <div class="bg-purple-100 p-3 rounded-full text-purple-600">
+                        <i class="fas fa-box fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mb-6 border-b border-gray-200 dark:border-gray-700">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="adminTabs" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <button
+                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 border-blue-600 text-blue-600"
+                        id="users-tab" data-tabs-target="#users" type="button" role="tab" aria-controls="users"
+                        aria-selected="true">User Management</button>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <button
+                        class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        id="products-tab" data-tabs-target="#products" type="button" role="tab" aria-controls="products"
+                        aria-selected="false">Product Management</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="adminTabContent">
+
+            <!-- Users Tab -->
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-dark-bg" id="users" role="tabpanel"
+                aria-labelledby="users-tab">
+                <div class="bg-white dark:bg-dark-card shadow-md rounded-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Business Name</th>
+                                    <th scope="col" class="px-6 py-3">Email</th>
+                                    <th scope="col" class="px-6 py-3">Status</th>
+                                    <th scope="col" class="px-6 py-3">Joined</th>
+                                    <th scope="col" class="px-6 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% users.forEach(u=> { %>
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td
+                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                            <%= u.business_name %>
+                                                <% if(u.role==='admin' ) { %> <span
+                                                        class="ml-2 px-2 py-0.5 text-xs bg-red-100 text-red-800 rounded">Admin</span>
+                                                    <% } %>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <%= u.email %>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <% if(u.status==='active' ) { %>
+                                                <span
+                                                    class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span>
+                                                <% } else if(u.status==='suspended' ) { %>
+                                                    <span
+                                                        class="px-2 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">Suspended</span>
+                                                    <% } else { %>
+                                                        <span
+                                                            class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Pending</span>
+                                                        <% } %>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <%= new Date(u.created_at).toLocaleDateString() %>
+                                        </td>
+                                        <td class="px-6 py-4 space-x-2">
+                                            <% if(u.role !=='admin' ) { %>
+                                                <% if(u.status !=='active' ) { %>
+                                                    <button onclick="updateUserStatus('<%= u.id %>', 'verify')"
+                                                        class="font-medium text-green-600 dark:text-green-500 hover:underline">Activate</button>
+                                                    <% } %>
+                                                        <% if(u.status !=='suspended' ) { %>
+                                                            <button onclick="updateUserStatus('<%= u.id %>', 'suspend')"
+                                                                class="font-medium text-red-600 dark:text-red-500 hover:underline">Suspend</button>
+                                                            <% } %>
+                                                                <% } %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-dark-bg" id="products" role="tabpanel"
+                aria-labelledby="products-tab">
+                <div class="bg-white dark:bg-dark-card shadow-md rounded-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Product Name</th>
+                                    <th scope="col" class="px-6 py-3">Seller</th>
+                                    <th scope="col" class="px-6 py-3">Price</th>
+                                    <th scope="col" class="px-6 py-3">Category</th>
+                                    <th scope="col" class="px-6 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% products.forEach(p=> { %>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                        id="product-<%= p.id %>">
+                                        <td
+                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <% if(p.featured_photo) { %>
+                                                    <img src="/uploads/<%= p.featured_photo %>"
+                                                        class="w-8 h-8 rounded mr-2 object-cover">
+                                                    <% } %>
+                                                        <%= p.name %>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <%= p.business_name || 'Unknown' %>
+                                        </td>
+                                        <td class="px-6 py-4">FCFA <%= p.current_price.toLocaleString() %>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <%= p.category %>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <button onclick="deleteProduct('<%= p.id %>')"
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab Switching Logic
+        const tabs = document.querySelectorAll('[role="tab"]');
+        const tabContents = document.querySelectorAll('[role="tabpanel"]');
+
+        // Show first tab by default
+        document.getElementById('users').classList.remove('hidden');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.getAttribute('data-tabs-target');
+
+                // Hide all contents
+                tabContents.forEach(content => content.classList.add('hidden'));
+
+                // Show target content
+                document.querySelector(targetId).classList.remove('hidden');
+
+                // Update tab styles
+                tabs.forEach(t => {
+                    t.classList.remove('border-blue-600', 'text-blue-600');
+                    t.classList.add('border-transparent');
+                });
+                tab.classList.add('border-blue-600', 'text-blue-600');
+                tab.classList.remove('border-transparent');
+            });
+        });
+
+        // User Actions
+        async function updateUserStatus(userId, action) {
+            if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+
+            try {
+                const response = await fetch(`/admin/users/${userId}/${action}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred');
+            }
+        }
+
+        // Product Actions
+        async function deleteProduct(productId) {
+            if (!confirm('Are you sure you want to delete this product? This cannot be undone.')) return;
+
+            try {
+                const response = await fetch(`/admin/products/${productId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById(`product-${productId}`).remove();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred');
+            }
+        }
+    </script>
+</body>
+
+</html>
