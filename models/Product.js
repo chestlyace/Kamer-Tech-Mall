@@ -28,7 +28,7 @@ class Product {
         features || null, conditions || null, returnPolicy || null,
         isFeatured || false, isActive !== false
       ]);
-      
+
       return await this.findById(result.insertId, sellerId);
     } else if (dbType === 'supabase') {
       const supabase = database.getClient();
@@ -60,7 +60,7 @@ class Product {
         }])
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     }
@@ -123,7 +123,7 @@ class Product {
         .eq('id', productId)
         .eq('seller_id', sellerId)
         .single();
-      
+
       if (error && error.code !== 'PGRST116') throw error;
       return data;
     }
@@ -156,7 +156,7 @@ class Product {
         features || null, conditions || null, returnPolicy || null,
         isFeatured || false, isActive !== false, productId, sellerId
       ]);
-      
+
       return await this.findById(productId, sellerId);
     } else if (dbType === 'supabase') {
       const supabase = database.getClient();
@@ -189,7 +189,7 @@ class Product {
         .eq('seller_id', sellerId)
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     }
@@ -208,7 +208,7 @@ class Product {
         .delete()
         .eq('id', productId)
         .eq('seller_id', sellerId);
-      
+
       if (error) throw error;
       return true;
     }
@@ -228,12 +228,12 @@ class Product {
       return results[0];
     } else if (dbType === 'supabase') {
       const supabase = database.getClient();
-      
+
       const { data: allProducts } = await supabase
         .from('products')
         .select('status')
         .eq('seller_id', sellerId);
-      
+
       return {
         total: allProducts?.length || 0,
         published: allProducts?.filter(p => p.status === 'published').length || 0,
@@ -377,8 +377,37 @@ class Product {
         .eq('is_featured', true)
         .order('created_at', { ascending: false })
         .limit(limit);
-      
+
       if (error) throw error;
+      return data;
+    }
+  }
+
+  // Get single published product by ID
+  static async getPublishedProductById(productId) {
+    if (dbType === 'mysql') {
+      const query = `
+        SELECT p.*, s.business_name, s.username as seller_username, s.phone as seller_phone, s.email as seller_email
+        FROM products p
+        JOIN sellers s ON p.seller_id = s.id
+        WHERE p.id = ? AND p.status = 'published' AND p.is_active = TRUE
+      `;
+      const results = await database.query(query, [productId]);
+      return results[0] || null;
+    } else if (dbType === 'supabase') {
+      const supabase = database.getClient();
+      const { data, error } = await supabase
+        .from('products')
+        .select(`
+          *,
+          sellers!inner(business_name, username, phone, email)
+        `)
+        .eq('id', productId)
+        .eq('status', 'published')
+        .eq('is_active', true)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error;
       return data;
     }
   }

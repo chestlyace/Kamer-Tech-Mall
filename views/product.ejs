@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        .goog-te-banner-frame.skiptranslate,
+        #goog-gt-tt,
+        .goog-te-gadget,
+        .goog-te-balloon-frame,
+        iframe.skiptranslate {
+            display: none !important;
+        }
+
+        body.translated-ltr {
+            top: 0 !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        #google_translate_element {
+            display: none !important;
+        }
+
+        .thumbnail-active {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .gradient-border {
+            border-image: linear-gradient(135deg, #2563eb, #7c3aed) 1;
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
+
+    <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="hidden md:flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="/">
+                        <img src="/images/logo.jpg" alt="Logo" class="h-8">
+                    </a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="/shop"
+                        class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        All Products
+                    </a>
+                    <a href="/about"
+                        class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                        About Us
+                    </a>
+                    <% if (seller) { %>
+                        <a href="/seller/dashboard"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                            Seller Dashboard
+                        </a>
+                        <% } else { %>
+                            <a href="/auth/login"
+                                class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium whitespace-nowrap">
+                                Seller Login
+                            </a>
+                            <% } %>
+                                <button onclick="toggleDarkMode()"
+                                    class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                                    <i class="fas fa-moon"></i>
+                                </button>
+                                <div class="relative">
+                                    <select id="languageSelector" onchange="changeLanguage(this.value)"
+                                        class="text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                        <option value="en">English</option>
+                                        <option value="fr">Français</option>
+                                    </select>
+                                </div>
+                                <div id="google_translate_element" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="md:hidden">
+                <div class="flex justify-between items-center py-3">
+                    <div class="flex items-center">
+                        <a href="/">
+                            <img src="/images/logo.jpg" alt="Logo" class="h-6">
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="toggleDarkMode()"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button onclick="toggleMobileMenu()"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="mobileMenu" class="hidden pb-3">
+                    <div class="flex flex-col space-y-3">
+                        <a href="/shop"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            All Products
+                        </a>
+                        <a href="/about"
+                            class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2 px-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            About Us
+                        </a>
+                        <div class="px-3">
+                            <select id="mobileLanguageSelector" onchange="changeLanguage(this.value)"
+                                class="w-full text-gray-600 dark:text-gray-300 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="google_translate_element" style="display:none;"></div>
+    </nav>
+
+    <div class="bg-white dark:bg-dark-card shadow-sm">
+        <div class="container mx-auto py-3 px-4 sm:px-6 lg:px-8">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
+                    <li class="inline-flex items-center">
+                        <a href="/"
+                            class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center text-gray-400">
+                            <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                            <a href="/shop"
+                                class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                                Shop
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center text-blue-600 dark:text-blue-400">
+                            <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                            <%= product.name %>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <main class="pb-16">
+        <section class="py-8 sm:py-10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/2">
+                        <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-4 sm:p-5">
+                            <div class="relative bg-gray-50 dark:bg-gray-900 rounded-xl overflow-hidden">
+                                <img id="featuredImage"
+                                    src="<%= product.featured_photo || '/images/banner-hero.jpeg' %>"
+                                    alt="<%= product.name %>" class="w-full h-64 sm:h-[420px] object-cover"
+                                    onerror="this.src='/images/banner-hero.jpeg'">
+                                <% if (product.is_featured) { %>
+                                    <span
+                                        class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-xs uppercase tracking-wide">Featured</span>
+                                    <% } %>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-4" id="productThumbnails">
+                                <button type="button"
+                                    class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition thumbnail-active"
+                                    data-image="<%= product.featured_photo || '/images/banner-hero.jpeg' %>"
+                                    data-alt="<%= product.name %>">
+                                    <img src="<%= product.featured_photo || '/images/banner-hero.jpeg' %>"
+                                        alt="<%= product.name %>" class="w-full h-16 sm:h-20 object-cover"
+                                        onerror="this.src='/images/banner-hero.jpeg'">
+                                </button>
+                                <% if (product.other_photos) { let photos=[]; try { photos=typeof
+                                    product.other_photos==='string' ? JSON.parse(product.other_photos) :
+                                    product.other_photos; } catch(e) { photos=[]; } if (Array.isArray(photos)) {
+                                    photos.forEach(photo=> { %>
+                                    <button type="button"
+                                        class="border rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                                        data-image="<%= photo %>" data-alt="<%= product.name %>">
+                                        <img src="<%= photo %>" alt="<%= product.name %>"
+                                            class="w-full h-16 sm:h-20 object-cover"
+                                            onerror="this.src='/images/banner-hero.jpeg'">
+                                    </button>
+                                    <% }); } } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 space-y-6">
+                        <div>
+                            <p class="text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wide">
+                                <%= product.category %>
+                            </p>
+                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+                                <%= product.name %>
+                            </h1>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                <%= product.description %>
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap items-baseline gap-3 sm:gap-4">
+                            <span class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">FCFA<%=
+                                    product.current_price.toLocaleString() %></span>
+                            <% if (product.old_price) { %>
+                                <span class="text-gray-500 line-through">FCFA<%= product.old_price.toLocaleString() %>
+                                </span>
+                                <% } %>
+                                    <% if (product.quantity> 0) { %>
+                                        <span
+                                            class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">In
+                                            Stock</span>
+                                        <% } else { %>
+                                            <span
+                                                class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-semibold">Out
+                                                of Stock</span>
+                                            <% } %>
+                        </div>
+
+                        <% if (product.features) { %>
+                            <div
+                                class="bg-white dark:bg-dark-card rounded-xl p-4 sm:p-5 shadow border border-gray-100 dark:border-gray-800">
+                                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Key
+                                    Highlights</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                                    <% let features=[]; try { features=typeof product.features==='string' ?
+                                        JSON.parse(product.features) : product.features; } catch(e) {
+                                        features=[product.features]; } if (Array.isArray(features)) {
+                                        features.forEach(feature=> { %>
+                                        <li class="flex items-start gap-2"><i
+                                                class="fas fa-check-circle text-blue-500 mt-0.5"></i>
+                                            <%= feature %>
+                                        </li>
+                                        <% }); } else if (typeof features==='string' ) { %>
+                                            <li class="flex items-start gap-2"><i
+                                                    class="fas fa-check-circle text-blue-500 mt-0.5"></i>
+                                                <%= features %>
+                                            </li>
+                                            <% } %>
+                                </ul>
+                            </div>
+                            <% } %>
+
+                                <% if (product.size || product.color || product.location) { %>
+                                    <div
+                                        class="bg-white dark:bg-dark-card rounded-xl p-4 sm:p-5 shadow border border-gray-100 dark:border-gray-800 mt-4">
+                                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                                            Specifications</h3>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                            <% if (product.size) { %>
+                                                <div
+                                                    class="flex justify-between border-b border-gray-100 dark:border-gray-700 pb-2">
+                                                    <span class="text-gray-500 dark:text-gray-400">Size</span>
+                                                    <span class="font-medium text-gray-900 dark:text-white">
+                                                        <%= product.size %>
+                                                    </span>
+                                                </div>
+                                                <% } %>
+                                                    <% if (product.color) { %>
+                                                        <div
+                                                            class="flex justify-between border-b border-gray-100 dark:border-gray-700 pb-2">
+                                                            <span class="text-gray-500 dark:text-gray-400">Color</span>
+                                                            <span class="font-medium text-gray-900 dark:text-white">
+                                                                <%= product.color %>
+                                                            </span>
+                                                        </div>
+                                                        <% } %>
+                                                            <% if (product.location) { %>
+                                                                <div
+                                                                    class="flex justify-between border-b border-gray-100 dark:border-gray-700 pb-2">
+                                                                    <span
+                                                                        class="text-gray-500 dark:text-gray-400">Location</span>
+                                                                    <span
+                                                                        class="font-medium text-gray-900 dark:text-white">
+                                                                        <%= product.location %>
+                                                                    </span>
+                                                                </div>
+                                                                <% } %>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                                            <a href="mailto:<%= product.seller_email %>?subject=Product%20Inquiry%20-%20<%= encodeURIComponent(product.name) %>"
+                                                class="w-full sm:flex-1 min-w-[220px] bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-xl font-semibold shadow-lg shadow-blue-200 transition">
+                                                Contact Supplier
+                                            </a>
+                                            <% if (product.seller_whatsapp || product.supplier_whatsapp) { const
+                                                waNumber=product.supplier_whatsapp || product.seller_whatsapp; %>
+                                                <a href="https://wa.me/<%= waNumber %>?text=Hello%20<%= encodeURIComponent(product.shop_name || 'Seller') %>%2C%20I%27d%20like%20to%20know%20more%20about%20the%20<%= encodeURIComponent(product.name) %>."
+                                                    target="_blank" rel="noopener"
+                                                    class="w-full sm:flex-1 min-w-[220px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-center py-3 rounded-xl font-semibold transition">
+                                                    Chat on WhatsApp
+                                                </a>
+                                                <% } %>
+                                        </div>
+                    </div>
+                </div>
+
+                <div id="contactSupplier"
+                    class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-lg p-5 sm:p-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div>
+                            <p class="text-sm uppercase text-blue-600 font-semibold tracking-wide">Contact Supplier</p>
+                            <h2 class="text-2xl font-bold mt-1 mb-2">Tell us what you need and get tailored quotes</h2>
+                            <p class="text-gray-600 dark:text-gray-300">Sold by: <strong>
+                                    <%= product.shop_name || product.business_name || product.seller_username %>
+                                </strong></p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full md:w-auto">
+                            <% if (product.supplier_phone || product.seller_phone) { %>
+                                <div class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                    <i class="fas fa-phone text-blue-600 text-xl mb-2"></i>
+                                    <p class="text-sm font-medium text-gray-500">Call</p>
+                                    <a href="tel:<%= product.supplier_phone || product.seller_phone %>"
+                                        class="block text-lg font-semibold text-blue-700">
+                                        <%= product.supplier_phone || product.seller_phone %>
+                                    </a>
+                                </div>
+                                <% } %>
+                                    <% if (product.supplier_whatsapp || product.seller_whatsapp) { %>
+                                        <div class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                            <i class="fab fa-whatsapp text-green-500 text-xl mb-2"></i>
+                                            <p class="text-sm font-medium text-gray-500">WhatsApp</p>
+                                            <a href="https://wa.me/<%= product.supplier_whatsapp || product.seller_whatsapp %>"
+                                                target="_blank" rel="noopener"
+                                                class="block text-lg font-semibold text-blue-700">Chat now</a>
+                                        </div>
+                                        <% } %>
+                                            <div
+                                                class="bg-blue-50 dark:bg-blue-900/40 rounded-xl p-4 sm:p-5 text-center">
+                                                <i class="fas fa-envelope text-blue-600 text-xl mb-2"></i>
+                                                <p class="text-sm font-medium text-gray-500">Email</p>
+                                                <a href="mailto:<%= product.seller_email %>"
+                                                    class="block text-lg font-semibold text-blue-700">Email Seller</a>
+                                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div
+                            class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span
+                                    class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <i class="fas fa-align-left text-blue-600"></i>
+                                </span>
+                                <h2 class="text-2xl font-bold">Description</h2>
+                            </div>
+                            <div class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <p>
+                                    <%= product.description %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <% if (product.conditions) { %>
+                            <div
+                                class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span
+                                        class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center">
+                                        <i class="fas fa-clipboard-check text-green-600"></i>
+                                    </span>
+                                    <h2 class="text-xl font-bold">Conditions</h2>
+                                </div>
+                                <div class="text-gray-600 dark:text-gray-300">
+                                    <%= product.conditions %>
+                                </div>
+                            </div>
+                            <% } %>
+                    </div>
+
+                    <div class="space-y-6">
+                        <% if (product.return_policy) { %>
+                            <div
+                                class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span
+                                        class="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
+                                        <i class="fas fa-shield-alt text-purple-600"></i>
+                                    </span>
+                                    <h2 class="text-xl font-bold">Return Policy</h2>
+                                </div>
+                                <div class="text-gray-600 dark:text-gray-300">
+                                    <%= product.return_policy %>
+                                </div>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+
+                <% if (relatedProducts && relatedProducts.length> 0) { %>
+                    <div
+                        class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-5 sm:p-6 border border-gray-100 dark:border-gray-800">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span
+                                class="w-10 h-10 rounded-full bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center">
+                                <i class="fas fa-th-large text-pink-600"></i>
+                            </span>
+                            <h2 class="text-2xl font-bold">Related Products</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-6">
+                            <% relatedProducts.forEach(function(related) { %>
+                                <div
+                                    class="border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden shadow hover:shadow-lg transition flex flex-col">
+                                    <img src="<%= related.featured_photo || '/images/banner-hero.jpeg' %>"
+                                        alt="<%= related.name %>" class="w-full h-40 sm:h-48 object-cover"
+                                        onerror="this.src='/images/banner-hero.jpeg'">
+                                    <div class="p-4 flex flex-col flex-1">
+                                        <h3 class="text-lg font-semibold mb-2">
+                                            <%= related.name %>
+                                        </h3>
+                                        <p class="text-blue-600 font-bold text-xl mb-4">FCFA<%=
+                                                related.current_price.toLocaleString() %>
+                                        </p>
+                                        <a href="/product/<%= related.id %>"
+                                            class="mt-auto text-center bg-gray-100 dark:bg-gray-800 text-blue-600 font-semibold py-2 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View
+                                            Product</a>
+                                    </div>
+                                </div>
+                                <% }); %>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-3">About Us</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/about" class="hover:text-blue-400">Our Story</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Customer Service</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-blue-400">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-blue-400">Returns</a></li>
+                        <li><a href="#" class="hover:text-blue-400">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Connect With Us</h3>
+                    <div class="flex space-x-4 text-xl">
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Subscribe for weekly tech drops and exclusive deals.</p>
+                    <form class="flex flex-col sm:flex-row">
+                        <input type="email" placeholder="Enter your email"
+                            class="w-full px-3 py-2 rounded-lg sm:rounded-r-none sm:rounded-l-lg text-gray-900 mb-3 sm:mb-0">
+                        <button
+                            class="bg-blue-600 px-4 py-2 rounded-lg sm:rounded-l-none sm:rounded-r-lg hover:bg-blue-700">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
+                &copy; 2025 Kamer Tech Mall. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/scripts/products.js"></script>
+    <script src="/assets/scripts/search-feature.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const featuredImage = document.getElementById('featuredImage');
+            const thumbnailButtons = document.querySelectorAll('#productThumbnails button');
+
+            thumbnailButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const newImage = button.getAttribute('data-image');
+                    const newAlt = button.getAttribute('data-alt');
+
+                    featuredImage.src = newImage;
+                    featuredImage.alt = newAlt;
+
+                    thumbnailButtons.forEach(btn => btn.classList.remove('thumbnail-active'));
+                    button.classList.add('thumbnail-active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
