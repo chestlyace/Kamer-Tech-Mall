@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Kamer Tech Mall</title>
+  <title>
+    <%= title %> | Kamer Tech Mall
+  </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script>
@@ -35,6 +38,7 @@
     }
   </script>
 </head>
+
 <body class="bg-gray-100 dark:bg-dark-bg dark:text-dark-text transition-colors duration-200">
   <!-- Navigation -->
   <nav class="bg-white dark:bg-dark-card shadow sticky top-0 z-50">
@@ -51,18 +55,22 @@
         </a>
       </div>
       <div class="flex flex-wrap items-center gap-3">
-        <a href="/" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+        <a href="/"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
           <i class="fas fa-arrow-left"></i>
           Back to home
         </a>
-        <a href="/seller/profile" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+        <a href="/seller/profile"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
           <i class="fas fa-user"></i>
           <%= seller.username %>
         </a>
-        <button onclick="toggleDarkMode()" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+        <button onclick="toggleDarkMode()"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
           <i class="fas fa-moon"></i>
         </button>
-        <a href="/auth/logout" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition">
+        <a href="/auth/logout"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>
@@ -71,524 +79,667 @@
   </nav>
 
   <!-- Flash Messages -->
-  <% if (success_messages && success_messages.length > 0) { %>
+  <% if (success_messages && success_messages.length> 0) { %>
     <div class="container mx-auto px-4 mt-4">
       <% success_messages.forEach(function(message) { %>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
+        <div
+          class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
           <i class="fas fa-check-circle"></i>
-          <span><%= message %></span>
-        </div>
-      <% }); %>
-    </div>
-  <% } %>
-  <% if (error_messages && error_messages.length > 0) { %>
-    <div class="container mx-auto px-4 mt-4">
-      <% error_messages.forEach(function(message) { %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
-          <i class="fas fa-exclamation-circle"></i>
-          <span><%= message %></span>
-        </div>
-      <% }); %>
-    </div>
-  <% } %>
-
-  <main class="py-10 md:py-14">
-    <section class="container mx-auto px-4 space-y-8">
-      <!-- Hero Banner -->
-      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-xl p-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="text-sm uppercase tracking-widest text-blue-100">Seller Dashboard</p>
-          <h1 class="text-3xl md:text-4xl font-bold mt-2">Manage your product catalog</h1>
-          <p class="text-blue-100 mt-2 max-w-2xl">Add new listings, update inventory, and keep your catalog consistent. All changes are saved to the database instantly.</p>
-        </div>
-        <div class="flex flex-col gap-2 text-right">
-          <span class="text-xs uppercase tracking-widest text-blue-100">Need help?</span>
-          <a href="mailto:support@kamertechmall.com" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/20 transition">
-            <i class="fas fa-headset"></i>
-            Contact support
-          </a>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Total products</p>
-          <p class="text-3xl font-bold text-gray-900 dark:text-white"><%= stats.total || 0 %></p>
-          <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 inline-flex items-center gap-1">
-            <i class="fas fa-database"></i>
-            In database
+          <span>
+            <%= message %>
           </span>
-        </article>
-        <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Published listings</p>
-          <p class="text-3xl font-bold text-gray-900 dark:text-white"><%= stats.published || 0 %></p>
-          <span class="text-xs text-gray-400">Visible to shoppers</span>
-        </article>
-        <article class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Drafts</p>
-          <p class="text-3xl font-bold text-gray-900 dark:text-white"><%= stats.drafts || 0 %></p>
-          <span class="text-xs text-gray-400">Waiting for review</span>
-        </article>
-      </div>
-
-      <!-- Main Content -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Product Form -->
-        <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-6">
-          <div class="mb-6">
-            <p class="text-sm uppercase text-blue-600 font-semibold tracking-wide mb-1">Quick action</p>
-            <h3 id="formTitle" class="text-xl font-bold">Add a new product</h3>
-            <p id="formSubtitle" class="text-sm text-gray-500 dark:text-gray-400">Provide product information and hit publish to make it live.</p>
-          </div>
-          <form id="productForm" class="space-y-5">
-            <input type="hidden" id="productId" name="productId">
-            
-            <div>
-              <label for="productName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product name</label>
-              <input type="text" id="productName" name="name" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Logitech MX Master 3S" required>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="category" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Category</label>
-                <select id="category" name="category" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                  <option value="Phones">Phones</option>
-                  <option value="Laptops">Laptops</option>
-                  <option value="Accessories">Accessories</option>
-                  <option value="Wearables">Wearables</option>
-                  <option value="Gaming">Gaming</option>
-                </select>
-              </div>
-              <div>
-                <label for="status" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Listing status</label>
-                <select id="status" name="status" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option value="published">Published</option>
-                  <option value="draft">Draft</option>
-                  <option value="archived">Archived</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label for="oldPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Old price (FCFA)</label>
-                <input type="number" min="0" step="1" id="oldPrice" name="oldPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="300000">
-              </div>
-              <div>
-                <label for="newPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">New price (FCFA)</label>
-                <input type="number" min="0" step="1" id="newPrice" name="newPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="250000">
-              </div>
-              <div>
-                <label for="currentPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Current price (FCFA)</label>
-                <input type="number" min="0" step="1" id="currentPrice" name="currentPrice" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="240000" required>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label for="quantity" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Quantity</label>
-                <input type="number" min="0" step="1" id="quantity" name="quantity" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="25" required>
-              </div>
-              <div>
-                <label for="size" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Size</label>
-                <input type="text" id="size" name="size" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. 13-inch">
-              </div>
-              <div>
-                <label for="color" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Color</label>
-                <input type="text" id="color" name="color" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Space Gray">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="location" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Location of shop</label>
-                <input type="text" id="location" name="location" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Douala, Cameroon" value="<%= seller.address || '' %>">
-              </div>
-              <div>
-                <label for="shopName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Name of shop or seller</label>
-                <input type="text" id="shopName" name="shopName" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Kamer Tech Hub" value="<%= seller.business_name || '' %>">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="supplierPhone" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier phone number</label>
-                <input type="tel" id="supplierPhone" name="supplierPhone" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="+237 6XX XXX XXX" value="<%= seller.phone || '' %>">
-              </div>
-              <div>
-                <label for="supplierWhatsapp" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier WhatsApp</label>
-                <input type="tel" id="supplierWhatsapp" name="supplierWhatsapp" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="+237 6XX XXX XXX">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="featuredPhoto" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Featured photo URL</label>
-                <input type="url" id="featuredPhoto" name="featuredPhoto" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://example.com/featured.jpg">
-              </div>
-              <div>
-                <label for="otherPhotos" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Other photos (comma separated)</label>
-                <textarea id="otherPhotos" name="otherPhotos" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://example.com/photo-1.jpg, https://example.com/photo-2.jpg"></textarea>
-              </div>
-            </div>
-
-            <div>
-              <label for="description" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product description</label>
-              <textarea id="description" name="description" rows="3" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Highlight key selling points"></textarea>
-            </div>
-            <div>
-              <label for="features" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Features</label>
-              <textarea id="features" name="features" rows="3" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Separate features with commas or line breaks"></textarea>
-            </div>
-            <div>
-              <label for="conditions" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Conditions</label>
-              <textarea id="conditions" name="conditions" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Brand new, sealed box"></textarea>
-            </div>
-            <div>
-              <label for="returnPolicy" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Return policy</label>
-              <textarea id="returnPolicy" name="returnPolicy" rows="2" class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. 7-day return if unopened"></textarea>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4">
-              <label class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
-                <input type="checkbox" id="isFeatured" name="isFeatured" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                Featured product
-              </label>
-              <label class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
-                <input type="checkbox" id="isActive" name="isActive" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
-                Active listing
-              </label>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-3">
-              <button type="submit" id="submitBtn" class="w-full sm:flex-1 inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-2.5 transition">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <span id="submitBtnText">Publish product</span>
-              </button>
-              <button type="button" id="cancelEditBtn" class="hidden w-full sm:w-auto inline-flex justify-center items-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-xl px-4 py-2.5 transition">
-                <i class="fas fa-xmark"></i>
-                Cancel edit
-              </button>
-            </div>
-            <p class="text-xs text-gray-500 dark:text-gray-400 italic">Tip: keep descriptions concise. You can always update products later.</p>
-          </form>
         </div>
-
-        <!-- Product List -->
-        <div class="lg:col-span-2 space-y-6">
-          <!-- Filters -->
-          <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-5">
-            <form method="GET" action="/seller/dashboard" class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-              <div class="flex flex-col w-full md:w-auto gap-4 md:flex-row md:items-center">
-                <div class="flex items-center gap-2 w-full md:w-72 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
-                  <i class="fas fa-search text-gray-400"></i>
-                  <input type="text" name="search" value="<%= filters.search %>" class="flex-1 bg-transparent focus:outline-none text-sm" placeholder="Search by product or category">
-                </div>
-                <div class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
-                  <i class="fas fa-filter text-gray-400"></i>
-                  <select name="status" onchange="this.form.submit()" class="bg-transparent focus:outline-none text-sm">
-                    <option value="all" <%= filters.status === 'all' ? 'selected' : '' %>>All statuses</option>
-                    <option value="published" <%= filters.status === 'published' ? 'selected' : '' %>>Published</option>
-                    <option value="draft" <%= filters.status === 'draft' ? 'selected' : '' %>>Draft</option>
-                    <option value="archived" <%= filters.status === 'archived' ? 'selected' : '' %>>Archived</option>
-                  </select>
-                </div>
-              </div>
-              <% if (filters.search || filters.status !== 'all') { %>
-                <a href="/seller/dashboard" class="text-sm text-gray-500 hover:text-blue-600 font-semibold flex items-center gap-2">
-                  <i class="fas fa-eraser"></i>
-                  Reset filters
-                </a>
-              <% } %>
-            </form>
-          </div>
-
-          <% if (products.length === 0) { %>
-            <!-- Empty State -->
-            <div class="border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-8 text-center bg-white dark:bg-dark-card">
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-300">
-                  <i class="fas fa-box-open text-2xl"></i>
-                </div>
-                <h4 class="text-xl font-semibold">No products yet</h4>
-                <p class="text-gray-500 dark:text-gray-400 text-sm max-w-md">Start by adding your first product using the form. It will appear here once created.</p>
-              </div>
-            </div>
-          <% } else { %>
-            <!-- Desktop Table View -->
-            <div class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm">
-              <div class="hidden md:block overflow-x-auto">
-                <table class="min-w-full text-left text-sm">
-                  <thead class="text-gray-500 uppercase text-xs tracking-wide">
-                    <tr>
-                      <th class="px-6 py-4">Product</th>
-                      <th class="px-6 py-4">Category</th>
-                      <th class="px-6 py-4">Price</th>
-                      <th class="px-6 py-4">Stock</th>
-                      <th class="px-6 py-4">Status</th>
-                      <th class="px-6 py-4">Updated</th>
-                      <th class="px-6 py-4">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                    <% products.forEach(function(product) { %>
-                      <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition">
-                        <td class="px-6 py-4">
-                          <div class="flex items-center gap-3">
-                            <% if (product.featured_photo) { %>
-                              <img src="<%= product.featured_photo %>" alt="<%= product.name %>" class="h-12 w-12 rounded-xl object-cover border border-gray-100 dark:border-gray-800">
-                            <% } else { %>
-                              <div class="h-12 w-12 rounded-xl bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                                <i class="fas fa-image text-gray-400"></i>
-                              </div>
-                            <% } %>
-                            <div>
-                              <p class="font-semibold text-gray-900 dark:text-white"><%= product.name %></p>
-                              <p class="text-xs text-gray-500 max-w-xs truncate"><%= product.shop_name || 'Unknown seller' %> • <%= product.location || 'No location' %></p>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4"><%= product.category || '—' %></td>
-                        <td class="px-6 py-4">
-                          <div class="flex flex-col">
-                            <span class="font-semibold text-blue-600">FCFA<%= product.current_price.toLocaleString() %></span>
-                            <% if (product.old_price) { %>
-                              <span class="text-xs text-gray-400 line-through">FCFA<%= product.old_price.toLocaleString() %></span>
-                            <% } %>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span class="inline-flex items-center gap-2 <%= product.quantity > 0 ? 'text-emerald-600' : 'text-rose-600' %> font-semibold">
-                            <i class="fas <%= product.quantity > 0 ? 'fa-check-circle' : 'fa-triangle-exclamation' %>"></i>
-                            <%= product.quantity > 0 ? `${product.quantity} units` : 'Out of stock' %>
-                          </span>
-                        </td>
-                        <td class="px-6 py-4">
-                          <% 
-                            let statusColor = product.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 
-                                            product.status === 'draft' ? 'bg-amber-100 text-amber-700' : 'bg-gray-200 text-gray-700';
-                          %>
-                          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold <%= statusColor %>">
-                            <span class="h-2 w-2 rounded-full bg-current"></span>
-                            <%= product.status.charAt(0).toUpperCase() + product.status.slice(1) %>
-                          </span>
-                        </td>
-                        <td class="px-6 py-4 text-gray-500">
-                          <%= new Date(product.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %>
-                        </td>
-                        <td class="px-6 py-4">
-                          <div class="flex items-center gap-2">
-                            <button onclick="editProduct(<%= product.id %>)" class="text-amber-600 hover:text-amber-700 font-semibold text-sm">Edit</button>
-                            <button onclick="deleteProduct(<%= product.id %>)" class="text-rose-600 hover:text-rose-700 font-semibold text-sm">Delete</button>
-                          </div>
-                        </td>
-                      </tr>
-                    <% }); %>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Mobile Card View -->
-              <div class="md:hidden p-4 space-y-4">
-                <% products.forEach(function(product) { %>
-                  <div class="border border-gray-100 dark:border-gray-800 rounded-2xl p-4 space-y-3 bg-white dark:bg-dark-card shadow-sm">
-                    <div class="flex items-start justify-between gap-3">
-                      <div>
-                        <p class="font-semibold text-lg"><%= product.name %></p>
-                        <p class="text-sm text-blue-600 font-semibold">FCFA<%= product.current_price.toLocaleString() %></p>
-                      </div>
-                      <% 
-                        let statusColor = product.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 
-                                        product.status === 'draft' ? 'bg-amber-100 text-amber-700' : 'bg-gray-200 text-gray-700';
-                      %>
-                      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold <%= statusColor %>">
-                        <span class="h-2 w-2 rounded-full bg-current"></span>
-                        <%= product.status.charAt(0).toUpperCase() + product.status.slice(1) %>
-                      </span>
-                    </div>
-                    <p class="text-sm text-gray-500"><%= product.description || 'No description yet' %></p>
-                    <div class="grid grid-cols-2 gap-3 text-xs text-gray-500">
-                      <div>
-                        <p class="uppercase">Category</p>
-                        <p class="font-semibold text-gray-900 dark:text-white"><%= product.category || '—' %></p>
-                      </div>
-                      <div>
-                        <p class="uppercase">Stock</p>
-                        <p class="font-semibold <%= product.quantity > 0 ? 'text-emerald-600' : 'text-rose-600' %>">
-                          <%= product.quantity > 0 ? `${product.quantity} units` : 'Out of stock' %>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-1">
-                      <button onclick="editProduct(<%= product.id %>)" class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-amber-200 text-amber-600 text-sm font-semibold">
-                        <i class="fas fa-pen"></i>
-                        Edit
-                      </button>
-                      <button onclick="deleteProduct(<%= product.id %>)" class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-rose-200 text-rose-600 text-sm font-semibold">
-                        <i class="fas fa-trash"></i>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                <% }); %>
-              </div>
-            </div>
-          <% } %>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold tracking-wide transition transform translate-y-6 opacity-0">
-    Message
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-8 md:py-12 mt-12">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <p class="text-sm text-gray-300">&copy; <%= new Date().getFullYear() %> Kamer Tech Mall. All rights reserved.</p>
-        <div class="flex items-center gap-3 text-gray-400">
-          <span class="text-sm">Need help?</span>
-          <a href="mailto:support@kamertechmall.com" class="text-blue-400 hover:text-blue-300 text-sm">support@kamertechmall.com</a>
-        </div>
-      </div>
+        <% }); %>
     </div>
-  </footer>
+    <% } %>
+      <% if (error_messages && error_messages.length> 0) { %>
+        <div class="container mx-auto px-4 mt-4">
+          <% error_messages.forEach(function(message) { %>
+            <div
+              class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>
+                <%= message %>
+              </span>
+            </div>
+            <% }); %>
+        </div>
+        <% } %>
 
-  <script>
-    let editingProductId = null;
+          <main class="py-10 md:py-14">
+            <section class="container mx-auto px-4 space-y-8">
+              <!-- Hero Banner -->
+              <div
+                class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-xl p-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p class="text-sm uppercase tracking-widest text-blue-100">Seller Dashboard</p>
+                  <h1 class="text-3xl md:text-4xl font-bold mt-2">Manage your product catalog</h1>
+                  <p class="text-blue-100 mt-2 max-w-2xl">Add new listings, update inventory, and keep your catalog
+                    consistent. All changes are saved to the database instantly.</p>
+                </div>
+                <div class="flex flex-col gap-2 text-right">
+                  <span class="text-xs uppercase tracking-widest text-blue-100">Need help?</span>
+                  <a href="mailto:support@kamertechmall.com"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white font-semibold hover:bg-white/20 transition">
+                    <i class="fas fa-headset"></i>
+                    Contact support
+                  </a>
+                </div>
+              </div>
 
-    // Show toast notification
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.style.backgroundColor = type === 'error' ? '#dc2626' : type === 'warning' ? '#f97316' : '#111827';
-      toast.classList.remove('hidden', 'translate-y-6', 'opacity-0');
-      setTimeout(() => {
-        toast.classList.add('translate-y-6', 'opacity-0');
-        setTimeout(() => toast.classList.add('hidden'), 300);
-      }, 3000);
-    }
+              <!-- Stats -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article
+                  class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Total products</p>
+                  <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                    <%= stats.total || 0 %>
+                  </p>
+                  <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 inline-flex items-center gap-1">
+                    <i class="fas fa-database"></i>
+                    In database
+                  </span>
+                </article>
+                <article
+                  class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Published listings</p>
+                  <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                    <%= stats.published || 0 %>
+                  </p>
+                  <span class="text-xs text-gray-400">Visible to shoppers</span>
+                </article>
+                <article
+                  class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Drafts</p>
+                  <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                    <%= stats.drafts || 0 %>
+                  </p>
+                  <span class="text-xs text-gray-400">Waiting for review</span>
+                </article>
+              </div>
 
-    // Handle form submission
-    document.getElementById('productForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData);
-      data.isFeatured = document.getElementById('isFeatured').checked;
-      data.isActive = document.getElementById('isActive').checked;
+              <!-- Main Content -->
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Product Form -->
+                <div
+                  class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-6">
+                  <div class="mb-6">
+                    <p class="text-sm uppercase text-blue-600 font-semibold tracking-wide mb-1">Quick action</p>
+                    <h3 id="formTitle" class="text-xl font-bold">Add a new product</h3>
+                    <p id="formSubtitle" class="text-sm text-gray-500 dark:text-gray-400">Provide product information
+                      and hit publish to make it live.</p>
+                  </div>
+                  <form id="productForm" class="space-y-5">
+                    <input type="hidden" id="productId" name="productId">
 
-      try {
-        let response;
-        if (editingProductId) {
-          response = await fetch(`/seller/products/${editingProductId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-        } else {
-          response = await fetch('/seller/products', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-        }
+                    <div>
+                      <label for="productName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product
+                        name</label>
+                      <input type="text" id="productName" name="name"
+                        class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="e.g. Logitech MX Master 3S" required>
+                    </div>
 
-        const result = await response.json();
-        if (result.success) {
-          showToast(result.message);
-          setTimeout(() => window.location.reload(), 1000);
-        } else {
-          showToast(result.message || 'Error saving product', 'error');
-        }
-      } catch (error) {
-        showToast('Error saving product', 'error');
-      }
-    });
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label for="category"
+                          class="text-sm font-semibold text-gray-700 dark:text-gray-200">Category</label>
+                        <select id="category" name="category"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          required>
+                          <option value="Phones">Phones</option>
+                          <option value="Laptops">Laptops</option>
+                          <option value="Accessories">Accessories</option>
+                          <option value="Wearables">Wearables</option>
+                          <option value="Gaming">Gaming</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label for="status" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Listing
+                          status</label>
+                        <select id="status" name="status"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option value="published">Published</option>
+                          <option value="draft">Draft</option>
+                          <option value="archived">Archived</option>
+                        </select>
+                      </div>
+                    </div>
 
-    // Edit product
-    async function editProduct(id) {
-      try {
-        const response = await fetch(`/seller/products/${id}`);
-        const result = await response.json();
-        
-        if (result.success) {
-          const product = result.product;
-          editingProductId = id;
-          
-          document.getElementById('productId').value = product.id;
-          document.getElementById('productName').value = product.name || '';
-          document.getElementById('category').value = product.category || 'Phones';
-          document.getElementById('status').value = product.status || 'draft';
-          document.getElementById('oldPrice').value = product.old_price || '';
-          document.getElementById('newPrice').value = product.new_price || '';
-          document.getElementById('currentPrice').value = product.current_price || '';
-          document.getElementById('quantity').value = product.quantity || 0;
-          document.getElementById('size').value = product.size || '';
-          document.getElementById('color').value = product.color || '';
-          document.getElementById('location').value = product.location || '';
-          document.getElementById('shopName').value = product.shop_name || '';
-          document.getElementById('supplierPhone').value = product.supplier_phone || '';
-          document.getElementById('supplierWhatsapp').value = product.supplier_whatsapp || '';
-          document.getElementById('featuredPhoto').value = product.featured_photo || '';
-          document.getElementById('otherPhotos').value = product.other_photos || '';
-          document.getElementById('description').value = product.description || '';
-          document.getElementById('features').value = product.features || '';
-          document.getElementById('conditions').value = product.conditions || '';
-          document.getElementById('returnPolicy').value = product.return_policy || '';
-          document.getElementById('isFeatured').checked = product.is_featured || false;
-          document.getElementById('isActive').checked = product.is_active !== false;
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label for="oldPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Old price
+                          (FCFA)</label>
+                        <input type="number" min="0" step="1" id="oldPrice" name="oldPrice"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="300000">
+                      </div>
+                      <div>
+                        <label for="newPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">New price
+                          (FCFA)</label>
+                        <input type="number" min="0" step="1" id="newPrice" name="newPrice"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="250000">
+                      </div>
+                      <div>
+                        <label for="currentPrice" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Current
+                          price (FCFA)</label>
+                        <input type="number" min="0" step="1" id="currentPrice" name="currentPrice"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="240000" required>
+                      </div>
+                    </div>
 
-          document.getElementById('formTitle').textContent = 'Update product';
-          document.getElementById('formSubtitle').textContent = 'Make changes and save to update your storefront.';
-          document.getElementById('submitBtnText').textContent = 'Save changes';
-          document.getElementById('submitBtn').innerHTML = '<i class="fas fa-floppy-disk"></i> Save changes';
-          document.getElementById('cancelEditBtn').classList.remove('hidden');
-          document.getElementById('cancelEditBtn').classList.add('inline-flex');
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label for="quantity"
+                          class="text-sm font-semibold text-gray-700 dark:text-gray-200">Quantity</label>
+                        <input type="number" min="0" step="1" id="quantity" name="quantity"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="25" required>
+                      </div>
+                      <div>
+                        <label for="size" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Size</label>
+                        <input type="text" id="size" name="size"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="e.g. 13-inch">
+                      </div>
+                      <div>
+                        <label for="color" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Color</label>
+                        <input type="text" id="color" name="color"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Space Gray">
+                      </div>
+                    </div>
 
-          document.getElementById('productForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      } catch (error) {
-        showToast('Error loading product', 'error');
-      }
-    }
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label for="location" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Location of
+                          shop</label>
+                        <input type="text" id="location" name="location"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Douala, Cameroon" value="<%= seller.address || '' %>">
+                      </div>
+                      <div>
+                        <label for="shopName" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Name of
+                          shop or seller</label>
+                        <input type="text" id="shopName" name="shopName"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Kamer Tech Hub" value="<%= seller.business_name || '' %>">
+                      </div>
+                    </div>
 
-    // Cancel edit
-    document.getElementById('cancelEditBtn').addEventListener('click', () => {
-      editingProductId = null;
-      document.getElementById('productForm').reset();
-      document.getElementById('formTitle').textContent = 'Add a new product';
-      document.getElementById('formSubtitle').textContent = 'Provide product information and hit publish to make it live.';
-      document.getElementById('submitBtnText').textContent = 'Publish product';
-      document.getElementById('submitBtn').innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish product';
-      document.getElementById('cancelEditBtn').classList.add('hidden');
-      document.getElementById('cancelEditBtn').classList.remove('inline-flex');
-    });
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label for="supplierPhone"
+                          class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier phone number</label>
+                        <input type="tel" id="supplierPhone" name="supplierPhone"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="+237 6XX XXX XXX" value="<%= seller.phone || '' %>">
+                      </div>
+                      <div>
+                        <label for="supplierWhatsapp"
+                          class="text-sm font-semibold text-gray-700 dark:text-gray-200">Supplier WhatsApp</label>
+                        <input type="tel" id="supplierWhatsapp" name="supplierWhatsapp"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="+237 6XX XXX XXX">
+                      </div>
+                    </div>
 
-    // Delete product
-    async function deleteProduct(id) {
-      if (!confirm('Are you sure you want to delete this product?')) return;
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label for="featuredPhoto"
+                          class="text-sm font-semibold text-gray-700 dark:text-gray-200">Featured photo</label>
+                        <input type="file" id="featuredPhoto" name="featuredPhoto" accept="image/*"
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty to keep existing photo when editing</p>
+                      </div>
+                      <div>
+                        <label for="otherPhotos" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Other
+                          photos</label>
+                        <input type="file" id="otherPhotos" name="otherPhotos" accept="image/*" multiple
+                          class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Select multiple files. Leave empty to keep existing photos
+                          when editing</p>
+                      </div>
+                    </div>
 
-      try {
-        const response = await fetch(`/seller/products/${id}`, {
-          method: 'DELETE'
-        });
-        const result = await response.json();
-        
-        if (result.success) {
-          showToast(result.message);
-          setTimeout(() => window.location.reload(), 1000);
-        } else {
-          showToast(result.message || 'Error deleting product', 'error');
-        }
-      } catch (error) {
-        showToast('Error deleting product', 'error');
-      }
-    }
-  </script>
+                    <div>
+                      <label for="description" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Product
+                        description</label>
+                      <textarea id="description" name="description" rows="3"
+                        class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Highlight key selling points"></textarea>
+                    </div>
+                    <div>
+                      <label for="features"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-200">Features</label>
+                      <textarea id="features" name="features" rows="3"
+                        class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Separate features with commas or line breaks"></textarea>
+                    </div>
+                    <div>
+                      <label for="conditions"
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-200">Conditions</label>
+                      <textarea id="conditions" name="conditions" rows="2"
+                        class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="e.g. Brand new, sealed box"></textarea>
+                    </div>
+                    <div>
+                      <label for="returnPolicy" class="text-sm font-semibold text-gray-700 dark:text-gray-200">Return
+                        policy</label>
+                      <textarea id="returnPolicy" name="returnPolicy" rows="2"
+                        class="mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="e.g. 7-day return if unopened"></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                      <label
+                        class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
+                        <input type="checkbox" id="isFeatured" name="isFeatured"
+                          class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        Featured product
+                      </label>
+                      <label
+                        class="inline-flex items-center gap-3 text-sm font-semibold text-gray-700 dark:text-gray-200">
+                        <input type="checkbox" id="isActive" name="isActive"
+                          class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
+                        Active listing
+                      </label>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                      <button type="submit" id="submitBtn"
+                        class="w-full sm:flex-1 inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-2.5 transition">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span id="submitBtnText">Publish product</span>
+                      </button>
+                      <button type="button" id="cancelEditBtn"
+                        class="hidden w-full sm:w-auto inline-flex justify-center items-center gap-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-xl px-4 py-2.5 transition">
+                        <i class="fas fa-xmark"></i>
+                        Cancel edit
+                      </button>
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 italic">Tip: keep descriptions concise. You can
+                      always update products later.</p>
+                  </form>
+                </div>
+
+                <!-- Product List -->
+                <div class="lg:col-span-2 space-y-6">
+                  <!-- Filters -->
+                  <div
+                    class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm p-5">
+                    <form method="GET" action="/seller/dashboard"
+                      class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+                      <div class="flex flex-col w-full md:w-auto gap-4 md:flex-row md:items-center">
+                        <div
+                          class="flex items-center gap-2 w-full md:w-72 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
+                          <i class="fas fa-search text-gray-400"></i>
+                          <input type="text" name="search" value="<%= filters.search %>"
+                            class="flex-1 bg-transparent focus:outline-none text-sm"
+                            placeholder="Search by product or category">
+                        </div>
+                        <div
+                          class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 bg-white dark:bg-gray-900">
+                          <i class="fas fa-filter text-gray-400"></i>
+                          <select name="status" onchange="this.form.submit()"
+                            class="bg-transparent focus:outline-none text-sm">
+                            <option value="all" <%=filters.status==='all' ? 'selected' : '' %>>All statuses</option>
+                            <option value="published" <%=filters.status==='published' ? 'selected' : '' %>>Published
+                            </option>
+                            <option value="draft" <%=filters.status==='draft' ? 'selected' : '' %>>Draft</option>
+                            <option value="archived" <%=filters.status==='archived' ? 'selected' : '' %>>Archived
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <% if (filters.search || filters.status !=='all' ) { %>
+                        <a href="/seller/dashboard"
+                          class="text-sm text-gray-500 hover:text-blue-600 font-semibold flex items-center gap-2">
+                          <i class="fas fa-eraser"></i>
+                          Reset filters
+                        </a>
+                        <% } %>
+                    </form>
+                  </div>
+
+                  <% if (products.length===0) { %>
+                    <!-- Empty State -->
+                    <div
+                      class="border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-8 text-center bg-white dark:bg-dark-card">
+                      <div class="flex flex-col items-center gap-3">
+                        <div
+                          class="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                          <i class="fas fa-box-open text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold">No products yet</h4>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm max-w-md">Start by adding your first product
+                          using the form. It will appear here once created.</p>
+                      </div>
+                    </div>
+                    <% } else { %>
+                      <!-- Desktop Table View -->
+                      <div
+                        class="bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm">
+                        <div class="hidden md:block overflow-x-auto">
+                          <table class="min-w-full text-left text-sm">
+                            <thead class="text-gray-500 uppercase text-xs tracking-wide">
+                              <tr>
+                                <th class="px-6 py-4">Product</th>
+                                <th class="px-6 py-4">Category</th>
+                                <th class="px-6 py-4">Price</th>
+                                <th class="px-6 py-4">Stock</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4">Updated</th>
+                                <th class="px-6 py-4">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                              <% products.forEach(function(product) { %>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition">
+                                  <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                      <% if (product.featured_photo) { %>
+                                        <img src="<%= product.featured_photo %>" alt="<%= product.name %>"
+                                          class="h-12 w-12 rounded-xl object-cover border border-gray-100 dark:border-gray-800">
+                                        <% } else { %>
+                                          <div
+                                            class="h-12 w-12 rounded-xl bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                            <i class="fas fa-image text-gray-400"></i>
+                                          </div>
+                                          <% } %>
+                                            <div>
+                                              <p class="font-semibold text-gray-900 dark:text-white">
+                                                <%= product.name %>
+                                              </p>
+                                              <p class="text-xs text-gray-500 max-w-xs truncate">
+                                                <%= product.shop_name || 'Unknown seller' %> • <%= product.location
+                                                    || 'No location' %>
+                                              </p>
+                                            </div>
+                                    </div>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <%= product.category || '—' %>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                      <span class="font-semibold text-blue-600">FCFA<%=
+                                          product.current_price.toLocaleString() %></span>
+                                      <% if (product.old_price) { %>
+                                        <span class="text-xs text-gray-400 line-through">FCFA<%=
+                                            product.old_price.toLocaleString() %></span>
+                                        <% } %>
+                                    </div>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <span
+                                      class="inline-flex items-center gap-2 <%= product.quantity > 0 ? 'text-emerald-600' : 'text-rose-600' %> font-semibold">
+                                      <i
+                                        class="fas <%= product.quantity > 0 ? 'fa-check-circle' : 'fa-triangle-exclamation' %>"></i>
+                                      <%= product.quantity> 0 ? `${product.quantity} units` : 'Out of stock' %>
+                                    </span>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <% let statusColor=product.status==='published' ? 'bg-emerald-100 text-emerald-700'
+                                      : product.status==='draft' ? 'bg-amber-100 text-amber-700'
+                                      : 'bg-gray-200 text-gray-700' ; %>
+                                      <span
+                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold <%= statusColor %>">
+                                        <span class="h-2 w-2 rounded-full bg-current"></span>
+                                        <%= product.status.charAt(0).toUpperCase() + product.status.slice(1) %>
+                                      </span>
+                                  </td>
+                                  <td class="px-6 py-4 text-gray-500">
+                                    <%= new Date(product.updated_at).toLocaleDateString('en-GB', { day: '2-digit' ,
+                                      month: 'short' , year: 'numeric' }) %>
+                                  </td>
+                                  <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2">
+                                      <button onclick="editProduct(<%= product.id %>)"
+                                        class="text-amber-600 hover:text-amber-700 font-semibold text-sm">Edit</button>
+                                      <button onclick="deleteProduct(<%= product.id %>)"
+                                        class="text-rose-600 hover:text-rose-700 font-semibold text-sm">Delete</button>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Mobile Card View -->
+                        <div class="md:hidden p-4 space-y-4">
+                          <% products.forEach(function(product) { %>
+                            <div
+                              class="border border-gray-100 dark:border-gray-800 rounded-2xl p-4 space-y-3 bg-white dark:bg-dark-card shadow-sm">
+                              <div class="flex items-start justify-between gap-3">
+                                <div>
+                                  <p class="font-semibold text-lg">
+                                    <%= product.name %>
+                                  </p>
+                                  <p class="text-sm text-blue-600 font-semibold">FCFA<%=
+                                      product.current_price.toLocaleString() %>
+                                  </p>
+                                </div>
+                                <% let statusColor=product.status==='published' ? 'bg-emerald-100 text-emerald-700' :
+                                  product.status==='draft' ? 'bg-amber-100 text-amber-700' : 'bg-gray-200 text-gray-700'
+                                  ; %>
+                                  <span
+                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold <%= statusColor %>">
+                                    <span class="h-2 w-2 rounded-full bg-current"></span>
+                                    <%= product.status.charAt(0).toUpperCase() + product.status.slice(1) %>
+                                  </span>
+                              </div>
+                              <p class="text-sm text-gray-500">
+                                <%= product.description || 'No description yet' %>
+                              </p>
+                              <div class="grid grid-cols-2 gap-3 text-xs text-gray-500">
+                                <div>
+                                  <p class="uppercase">Category</p>
+                                  <p class="font-semibold text-gray-900 dark:text-white">
+                                    <%= product.category || '—' %>
+                                  </p>
+                                </div>
+                                <div>
+                                  <p class="uppercase">Stock</p>
+                                  <p
+                                    class="font-semibold <%= product.quantity > 0 ? 'text-emerald-600' : 'text-rose-600' %>">
+                                    <%= product.quantity> 0 ? `${product.quantity} units` : 'Out of stock' %>
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="flex flex-wrap gap-2 pt-1">
+                                <button onclick="editProduct(<%= product.id %>)"
+                                  class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-amber-200 text-amber-600 text-sm font-semibold">
+                                  <i class="fas fa-pen"></i>
+                                  Edit
+                                </button>
+                                <button onclick="deleteProduct(<%= product.id %>)"
+                                  class="flex-1 inline-flex justify-center items-center gap-1 px-3 py-2 rounded-xl border border-rose-200 text-rose-600 text-sm font-semibold">
+                                  <i class="fas fa-trash"></i>
+                                  Delete
+                                </button>
+                              </div>
+                            </div>
+                            <% }); %>
+                        </div>
+                      </div>
+                      <% } %>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <!-- Toast Notification -->
+          <div id="toast"
+            class="fixed bottom-6 right-6 z-50 hidden bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold tracking-wide transition transform translate-y-6 opacity-0">
+            Message
+          </div>
+
+          <!-- Footer -->
+          <footer class="bg-gray-900 text-white py-8 md:py-12 mt-12">
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <p class="text-sm text-gray-300">&copy; <%= new Date().getFullYear() %> Kamer Tech Mall. All rights
+                    reserved.</p>
+                <div class="flex items-center gap-3 text-gray-400">
+                  <span class="text-sm">Need help?</span>
+                  <a href="mailto:support@kamertechmall.com"
+                    class="text-blue-400 hover:text-blue-300 text-sm">support@kamertechmall.com</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+          <script>
+            let editingProductId = null;
+
+            // Show toast notification
+            function showToast(message, type = 'success') {
+              const toast = document.getElementById('toast');
+              toast.textContent = message;
+              toast.style.backgroundColor = type === 'error' ? '#dc2626' : type === 'warning' ? '#f97316' : '#111827';
+              toast.classList.remove('hidden', 'translate-y-6', 'opacity-0');
+              setTimeout(() => {
+                toast.classList.add('translate-y-6', 'opacity-0');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+              }, 3000);
+            }
+
+            // Handle form submission
+            document.getElementById('productForm').addEventListener('submit', async (e) => {
+              e.preventDefault();
+
+              const formData = new FormData(e.target);
+              // No need to convert to JSON, send FormData directly
+              // But we need to handle checkbox values manually if they are not checked (FormData only sends checked)
+              // Actually, FormData sends 'on' if checked. We might need to adjust backend to handle 'on' or 'true'.
+              // My backend code checks: req.body.isFeatured === 'true' || req.body.isFeatured === true
+              // FormData sends the value of the checkbox if checked. If value is not set, it sends 'on'.
+              // Let's ensure we send 'true' or 'false'.
+
+              // Append checkboxes explicitly if needed, but FormData handles file uploads which JSON doesn't.
+              // Let's just use FormData and ensure backend handles it.
+              // Backend: req.body.isFeatured === 'true' ...
+              // If I don't set value in HTML, it sends 'on'.
+              // Let's update the HTML to have value="true" for checkboxes? 
+              // Or just append them manually to FormData?
+
+              // Better:
+              formData.set('isFeatured', document.getElementById('isFeatured').checked);
+              formData.set('isActive', document.getElementById('isActive').checked);
+
+              try {
+                let response;
+                if (editingProductId) {
+                  response = await fetch(`/seller/products/${editingProductId}`, {
+                    method: 'PUT',
+                    body: formData // Send FormData directly
+                  });
+                } else {
+                  response = await fetch('/seller/products', {
+                    method: 'POST',
+                    body: formData // Send FormData directly
+                  });
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                  showToast(result.message);
+                  setTimeout(() => window.location.reload(), 1000);
+                } else {
+                  showToast(result.message || 'Error saving product', 'error');
+                }
+              } catch (error) {
+                showToast('Error saving product', 'error');
+              }
+            });
+
+            // Edit product
+            async function editProduct(id) {
+              try {
+                const response = await fetch(`/seller/products/${id}`);
+                const result = await response.json();
+
+                if (result.success) {
+                  const product = result.product;
+                  editingProductId = id;
+
+                  document.getElementById('productId').value = product.id;
+                  document.getElementById('productName').value = product.name || '';
+                  document.getElementById('category').value = product.category || 'Phones';
+                  document.getElementById('status').value = product.status || 'draft';
+                  document.getElementById('oldPrice').value = product.old_price || '';
+                  document.getElementById('newPrice').value = product.new_price || '';
+                  document.getElementById('currentPrice').value = product.current_price || '';
+                  document.getElementById('quantity').value = product.quantity || 0;
+                  document.getElementById('size').value = product.size || '';
+                  document.getElementById('color').value = product.color || '';
+                  document.getElementById('location').value = product.location || '';
+                  document.getElementById('shopName').value = product.shop_name || '';
+                  document.getElementById('supplierPhone').value = product.supplier_phone || '';
+                  document.getElementById('supplierWhatsapp').value = product.supplier_whatsapp || '';
+
+                  // Clear file inputs as we can't set their value
+                  document.getElementById('featuredPhoto').value = '';
+                  document.getElementById('otherPhotos').value = '';
+
+                  document.getElementById('description').value = product.description || '';
+                  document.getElementById('features').value = product.features || '';
+                  document.getElementById('conditions').value = product.conditions || '';
+                  document.getElementById('returnPolicy').value = product.return_policy || '';
+                  document.getElementById('isFeatured').checked = product.is_featured || false;
+                  document.getElementById('isActive').checked = product.is_active !== false;
+
+                  document.getElementById('formTitle').textContent = 'Update product';
+                  document.getElementById('formSubtitle').textContent = 'Make changes and save to update your storefront.';
+                  document.getElementById('submitBtnText').textContent = 'Save changes';
+                  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-floppy-disk"></i> Save changes';
+                  document.getElementById('cancelEditBtn').classList.remove('hidden');
+                  document.getElementById('cancelEditBtn').classList.add('inline-flex');
+
+                  document.getElementById('productForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              } catch (error) {
+                showToast('Error loading product', 'error');
+              }
+            }
+
+            // Cancel edit
+            document.getElementById('cancelEditBtn').addEventListener('click', () => {
+              editingProductId = null;
+              document.getElementById('productForm').reset();
+              document.getElementById('formTitle').textContent = 'Add a new product';
+              document.getElementById('formSubtitle').textContent = 'Provide product information and hit publish to make it live.';
+              document.getElementById('submitBtnText').textContent = 'Publish product';
+              document.getElementById('submitBtn').innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish product';
+              document.getElementById('cancelEditBtn').classList.add('hidden');
+              document.getElementById('cancelEditBtn').classList.remove('inline-flex');
+            });
+
+            // Delete product
+            async function deleteProduct(id) {
+              if (!confirm('Are you sure you want to delete this product?')) return;
+
+              try {
+                const response = await fetch(`/seller/products/${id}`, {
+                  method: 'DELETE'
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                  showToast(result.message);
+                  setTimeout(() => window.location.reload(), 1000);
+                } else {
+                  showToast(result.message || 'Error deleting product', 'error');
+                }
+              } catch (error) {
+                showToast('Error deleting product', 'error');
+              }
+            }
+          </script>
 </body>
+
 </html>

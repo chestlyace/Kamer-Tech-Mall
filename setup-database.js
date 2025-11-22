@@ -44,6 +44,23 @@ async function setupDatabase() {
     `);
     console.log('Sellers table created successfully');
 
+    // Check and add missing columns for sellers (Schema Migration)
+    const [sellerColumns] = await connection.query('SHOW COLUMNS FROM sellers');
+    const sellerColumnNames = sellerColumns.map(c => c.Field);
+
+    if (!sellerColumnNames.includes('role')) {
+      await connection.query("ALTER TABLE sellers ADD COLUMN role ENUM('seller', 'admin') DEFAULT 'seller'");
+      console.log('Added missing column: role');
+    }
+    if (!sellerColumnNames.includes('status')) {
+      await connection.query("ALTER TABLE sellers ADD COLUMN status ENUM('pending', 'active', 'suspended') DEFAULT 'pending'");
+      console.log('Added missing column: status');
+    }
+    if (!sellerColumnNames.includes('verified')) {
+      await connection.query("ALTER TABLE sellers ADD COLUMN verified BOOLEAN DEFAULT FALSE");
+      console.log('Added missing column: verified');
+    }
+
     // Create seller_sessions table for enhanced security
     await connection.query(`
       CREATE TABLE IF NOT EXISTS seller_sessions (
